@@ -13,6 +13,8 @@
         <!-- Einbindung Stylesheet -->
         <link rel="stylesheet" id="style-base" href="style.css" />
 
+        <script src="backend.js"></script>
+
         
     </head>
     <body>
@@ -31,15 +33,19 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search">
                     </div>
                     <div class="col-sm-2">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                        <button class="btn btn-outline-success" type="submit" id="submit" onclick="buttonClick()">Search</button>
+
                     </div>
                 </div>
                </div>
             <div>
-                <p>Das ist der hinweistext, der sich ändern soll</p>
+                <p id="hint">Hier kann nach folgenden Ressourcen gesucht werden: Products, Carts, Users, Posts, Comments, Image, Todos oder Quotes.</p>
+            </div>
+            
+            <div id="ergebnis">
             </div>
         </main>
         <footer>

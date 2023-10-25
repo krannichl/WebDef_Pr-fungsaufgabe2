@@ -1,98 +1,91 @@
-window.onload = function() {
+//window.onload = function() {
+document.addEventListener("DOMContentLoaded", function (){
 
-let buttonClick = () => {
     let submitButton = document.getElementById("submit");
     let hintP = document.getElementById("hint");
     let ergebnisDiv = document.getElementById("ergebnis");
-    let searchInput = document.getElementById("search").value;
-
-    
-    if(searchInput == "Product" || searchInput == "product"){
- 
-        hintP.textContent = 'Folgende Treffer gibt es zu dem Begriff ';
-        
-        fetchProduct();
-        ergebnisliste();
-
-    }
-    else{
-        
-        hintP.textContent = 'Leider wurden hierzu keine treffer gefunden. :(';
-        ergebnis.textContent = '';       
-
-    }
-
-};
-
-let submitButton = document.getElementById("submit");
-submitButton.addEventListener("click", buttonClick);
-
-async function fetchProduct(){
-    try{
-        let response = await fetch('https://dummyjson.com/products/1');
-        let data = await response.json();
-        return data;    
-
-    }catch(error){
-        console.error('Fehler:', error);
-    }
-}
-
-let ergebnisliste = () => {
-    
-
-    fetchProduct().then(data => {
-        // Hier hast du Zugriff auf die abgerufenen Daten
-        // Du kannst sie nun in HTML anzeigen oder damit arbeiten
-        // Beispiel: Anzeigen des Titels und der Beschreibung des Produkts
-        let ergebnisDiv = document.getElementById("ergebnis");
-        
-        let descriptionElement = document.createElement('p');
-        let linkElement = document.createElement('a');
-        linkElement.href = 'produktseite.html';
-        linkElement.id = "dynamischerLink";
-        linkElement.textContent = data.title; // über data.title wir auf das attribut "title" in der JSON zugegriffen
-        linkElement.addEventListener("click", linkClick);
-
-        ergebnisDiv.appendChild(linkElement);
-        ergebnisDiv.appendChild(descriptionElement);
-
-      });
-}
-
-
-let linkClick = () => {
-    let dynamicLink = document.getElementById("DynamischerLink");
-    dynamicLink.addEventListener("click", linkClick);
+    let searchInput = document.getElementById("search");
+    //let dynamicLink = document.getElementById("DynamischerLink");
     let beschreibungDiv = document.getElementById("Produktbeschreibung");
 
-    fetchProduct().then(data => {
-        // Hier hast du Zugriff auf die abgerufenen Daten
-        // Du kannst sie nun in HTML anzeigen oder damit arbeiten
-        // Beispiel: Anzeigen des Titels und der Beschreibung des Produkts
+
+    // stimmt die suche und passt das was im feld steht?
+    function buttonClick() {
         
-        beschreibungDiv = data.title;
-        let titleElement = document.createElement('h1');
-        titleElement.textContent = data.title;
-        beschreibungDiv.appendChild(titleElement);
-            
-        let descriptionElement = document.createElement('p');
-        descriptionElement.textContent = data.title; // über data.title wir auf das attribut "title" in der JSON zugegriffen
-        beschreibungDiv.appendChild(descriptionElement);
+        let input = searchInput.value;
+                
+        if(input == "Product" || input == "product"){
     
-        let dElement = document.createElement('p');
-        dElement.textContent = "penis"; // über data.title wir auf das attribut "title" in der JSON zugegriffen
-        beschreibungDiv.appendChild(dElement);
-      });
+            hintP.textContent = 'Folgende Treffer gibt es zu dem Begriff ';
+
+            fetchProduct();
+        }
+        else{
+            
+            hintP.textContent = 'Leider wurden hierzu keine treffer gefunden. :(';
+            ergebnis.textContent = '';     
+        }
+
+    };
+    submitButton.addEventListener("click", buttonClick);
+
+    
+
+    // rest api aufruf und ausgabe des ausrufs als link auf dem bildschirm
+    function fetchProduct(){
+        try{
+            fetch('https://dummyjson.com/products/1')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Hier hast du Zugriff auf die abgerufenen Daten
+                // Du kannst sie nun in HTML anzeigen oder damit arbeiten
+                // Beispiel: Anzeigen des Titels und der Beschreibung des Produkts
+                
+                const descriptionElement = document.createElement('p');
+                const linkElement = document.createElement('a');
+
+                linkElement.href = 'produktseite.html';
+                linkElement.id = "dynamischerLink";
+                linkElement.textContent = data.title; // über data.title wir auf das attribut "title" in der JSON zugegriffen
+                
+                linkElement.addEventListener("click", function(event){
+                    linkClick(data);    
+                });
+
+                ergebnisDiv.appendChild(linkElement);
+                ergebnisDiv.appendChild(descriptionElement);
+            })
+
+
+        }catch(error){
+            console.error('Fehler:', error); //funktioniert nicht
+        }
+    };
+
+
+
+    function linkClick(data) {
+        
+        let produktTitel = document.createElement('h1');
+        let produktBeschreibung = document.createElement('p');
+
+        produktTitel.textContent = data.title;
+        beschreibungDiv.textContent = "penis";
+        beschreibungDiv.appendChild(produktTitel);
+                
+        
+        //produktBeschreibung.textContent = data.title; // über data.title wir auf das attribut "title" in der JSON zugegriffen
+        //beschreibungDiv.appendChild(produktBeschreibung);
+            
+    };
 
 
 
 
 
-}
-
-
-
-
-
-}
+});

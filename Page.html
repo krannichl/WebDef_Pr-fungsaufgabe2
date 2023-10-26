@@ -17,8 +17,12 @@
         <script src="backend.js"></script>
 
         
+        
+      
+        
     </head>
     <body>
+
         <header>
             <!-- überschrift -->
             <h1>
@@ -31,15 +35,30 @@
 
         </header>
 
-        <main id="Suchseite">
+        <main id="Suchseite" class="hidden">
             <div class="container">
                 <div class="row">
+
                     <div class="col-sm">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search">
                     </div>
                     <div class="col-sm-2">
                         <button class="btn btn-outline-success" type="submit" id="submit">Search</button>
                     </div>
+                    
+                    <!--SPA ROUTER - URL ERWEITERUNGEN-->
+                    <ul>
+                        <li>
+                            <a href="#/suchseite/">Andere Seite aufrufen</a>
+                        </li>
+                        <li>
+                            <a href="#/test/">Nicht vorhandene Seite aufrufen</a>
+                        </li>
+                        <li>
+                            <a href="#/08154711/">Andere nicht vorhandene Seite aufrufen</a>
+                        </li>
+                    </ul>
+
                 </div>
                </div>
             <div>
@@ -50,24 +69,24 @@
             </div>
         </main>
 
-        <main id="produktbeschreibung" >
+        <main id="produktbeschreibung" class="hidden">
             <div id="detailbeschreibung">
                 
             </div>
 
         </main>
 
-        <main id="benutzer" >
+        <main id="benutzer" class="hidden">
             <div id="userDetail">
                 
             </div>
            <p>
-                <a href="#" id="einkaufslink">einkaufswagen</a>
+                <a href="#warenkorb" id="einkaufslink">einkaufswagen</a>
             </p>
 
         </main>
 
-        <main id="Einkaufswagen" >
+        <main id="Einkaufswagen" class="hidden">
             <div id="produkteImEinkaufswagen">
                 
             </div>

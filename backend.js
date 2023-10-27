@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function (){
     let cartPage = document.getElementById("Einkaufswagen");
     let wasIstDas = document.getElementById("produktbeschreibung");
 
+    
     window.addEventListener("load", () => {
         /**
          * Hilfsfunktion zum Umschalten des sichtbaren Inhalts

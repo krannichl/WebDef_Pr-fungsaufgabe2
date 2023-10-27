@@ -8,27 +8,15 @@ document.addEventListener("DOMContentLoaded", function (){
     let detail = document.getElementById("detailbeschreibung");
     let cartLink = document.getElementById("einkaufslink");
     let cartinhalt = document.getElementById("produkteImEinkaufswagen");
-    let previousHash = null;
-
-
-    window.addEventListener("hashchange", () => {
-        previousHash = location.hash;
-    });    
-
     let backLink = document.createElement('a');
-        backLink.textContent = 'Zurück';
-        backLink.addEventListener("click", function(event){
-        event.preventDefault();
-        window.location.hash = previousHash;
-    });
-
+    let searchPage = document.getElementById("Suchseite");
+    let showUserPage = document.getElementById("benutzer");
+    let cartPage = document.getElementById("Einkaufswagen");
+    let wasIstDas = document.getElementById("produktbeschreibung");
 
     window.addEventListener("load", () => {
         /**
          * Hilfsfunktion zum Umschalten des sichtbaren Inhalts
-         *
-         * @param {String} id HTML-ID des anzuzeigenden <main>-Elements
-         * @param {String} title Neuer Titel für den Browser-Tab
          */
         let swapContent = (id, title) => {
             document.querySelectorAll("main").forEach(mainElement => {
@@ -39,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function (){
             if (element) element.classList.remove("hidden");
 
             document.title = `${title} | WebProg Prüfungsaugabe 2`;
+
         }
 
         /**
@@ -50,42 +39,49 @@ document.addEventListener("DOMContentLoaded", function (){
                 show: () => swapContent("Suchseite", "Startseite"),
             },{
                 url: "^/other/$",
-                show: () => swapContent("produktbeschreibung", "Andere Seite"),
+                show: () => swapContent("produktbeschreibung", "Andere Seite"), //falsch benannt
             },{
                 url: ".*",
-                show: () => swapContent("benutzer", "Seite nicht gefunden"),
+                show: () => swapContent("benutzer", "Seite nicht gefunden"), // falsch benannt
             },{
                 url: ".*",
-                show: () => swapContent("Einkaufswagen", "Seite nicht gefunden"),
+                show: () => swapContent("Einkaufswagen", "Seite nicht gefunden"), // falsch benannt
             },{
-                url: "^/user/([^/]+)/$",
+                url: "^/user/([^/]+)/$", //Titel fehlt
                 show: (matches) => {
                     let username = matches[1];
                     userPage(username);
+                    
+                    swapContent("test", "test");
+                    // Blendet alle anderen <main>-Elemente aus und zeigt das Suchseite-Element an
+                    document.querySelectorAll("main").forEach(mainElement => {
+                        mainElement.classList.add("hidden");
+                    });
+                    document.querySelector("Einkaufswage").classList.add("hidden");
                 }
             },{
-                url: "^/cart/([^/]+)/$",
+                url: "^/cart/([^/]+)/$", //Titel fehlt
                 show: (matches) => {
                     let cartId = matches[1];
                     fetchCart(cartId);
-                },
+                }
+
             }
             
         ];
 
         let router = new Router(routes);
         router.start();
+        let backLink = router.createBackLink();
     });
 
     "use strict";
 
     class Router {
-        /** Ich glaub das param braucht man nicht
-         * @param {List} routes Definition der in der App verfügbaren Seiten
-         */
         constructor(routes) {
             this._routes = routes;
             this._started = false;
+            this._previousHash = null;
 
             window.addEventListener("hashchange", () => this._handleRouting());
         }
@@ -100,11 +96,14 @@ document.addEventListener("DOMContentLoaded", function (){
             this._started = false;
         }
         _handleRouting() {
+            this._previousHash = location.hash;
             let url = location.hash.slice(1);
 
             if (url.length === 0) {
                 url = "/";
             }
+
+            
 
             let matches = null;
             let route = this._routes.find(p => matches = url.match(p.url));
@@ -116,12 +115,28 @@ document.addEventListener("DOMContentLoaded", function (){
 
             route.show(matches);
         }
+
+        createBackLink(){
+            backLink.href = "Zurück"
+            backLink.textContent = 'Zurück';
+
+            backLink.addEventListener("click", function(event) {
+                event.preventDefault();
+                if (this._previousHash) {
+                    window.location.hash = this._previousHash;
+                } else {
+                    window.location.hash = "/";
+                }
+
+                wasIstDas.style.display = "none";
+                searchPage.style.display = "block";
+                showUserPage.style.display = "none";
+                cartPage.style.display = "none";
+            });
+        }
     }
 
-
-
-
-
+    
     // stimmt die suche und passt das was im feld steht?
     function buttonClick() {
         
@@ -162,13 +177,6 @@ document.addEventListener("DOMContentLoaded", function (){
                 
                 const blocker = document.createElement('p');
                 const userLink = document.createElement('a');
-                
-                let backLink = document.createElement('a');
-                    backLink.textContent = 'Zurück';
-                    backLink.addEventListener("click", function(event){
-                    event.preventDefault();
-                    window.location.hash = previousHash;
-                });
                         
                 userLink.href = `#/user/${data.users[0].username}/`;
                 userLink.textContent = data.users[0].username; // über data.title wir auf das attribut "title" in der JSON zugegriffen
@@ -183,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function (){
                 ergebnisDiv.appendChild(userLink);
                 ergebnisDiv.appendChild(blocker);
                 ergebnisDiv.appendChild(backLink);
-
+                
                 
             })
 
@@ -228,9 +236,19 @@ document.addEventListener("DOMContentLoaded", function (){
         detail.appendChild(idNR);
         detail.appendChild(geschlecht);
         detail.appendChild(alter);
+        detail.appendChild(backLink);
+
+        suchergebnisseAnzeigen();
+   
         })
     }
-
+    
+    function suchergebnisseAnzeigen(){
+        wasIstDas.style.display = "block";
+        searchPage.style.display = "none";
+        showUserPage.style.display = "block";
+        cartPage.style.display = "none";
+    }
 
     function fetchCart(nutzerID){
     
@@ -264,11 +282,20 @@ document.addEventListener("DOMContentLoaded", function (){
                     });
 
                     cartinhalt.appendChild(blocker);
+                    cartinhalt.appendChild(backLink);
+                    produkteAnzeigen();
 
                 })
                 .catch(error => {
                     console.error('Error:', error);
                   });
+    }
+
+    function produkteAnzeigen(){
+        wasIstDas.style.display = "none";
+        searchPage.style.display = "none";
+        showUserPage.style.display = "none";
+        cartPage.style.display = "block";
     }
 
     

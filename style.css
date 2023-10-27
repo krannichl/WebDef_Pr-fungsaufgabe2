@@ -1,2 +1,9 @@
+.hidden {
+    display: block;
 
+}
 
+.hidden #Einkaufswagen{
+    display: block;
+
+}

@@ -16,57 +16,6 @@
         <!-- Einbindung JavaScript-->
         <script src="script.js"></script>
 
-        <script>
-            /*
-        Der gegebene Code definiert einen Event-Listener für das load-Ereignis des window-Objekts. Dies bedeutet, dass der Code innerhalb der Funktion erst ausgeführt wird, nachdem die gesamte Seite geladen wurde developer.mozilla.org.
-
-        Innerhalb des load-Event-Listeners werden zwei Funktionen definiert: swapContent und routes.
-
-        Die Funktion swapContent wird verwendet, um den sichtbaren Inhalt einer Seite zu wechseln. Sie nimmt zwei Parameter: id und title. id ist die ID des Elements, das angezeigt werden soll, und title ist der Titel, der im Dokument angezeigt werden soll. Die Funktion durchläuft alle main-Elemente auf der Seite und fügt ihnen die hidden-Klasse hinzu, um sie auszublenden. Dann sucht sie das Element mit der übergebenen id und entfernt die hidden-Klasse von diesem Element, um es anzuzeigen. Schließlich ändert sie den Titel des Dokuments auf den übergebenen title section.io.
-
-        Die Variable routes ist ein Array von Objekten, die die Konfiguration für einen Router darstellen. Jedes Objekt in routes hat zwei Eigenschaften: url und show. url ist ein regulärer Ausdruck, der die URL übereinstimmt, die den Router auslösen soll, und show ist eine Funktion, die aufgerufen wird, wenn die URL übereinstimmt. Die Funktion show nimmt ein Array von Übereinstimmungen als Parameter und verwendet diese, um den sichtbaren Inhalt der Seite zu ändern section.io.
-
-        Am Ende des load-Event-Listeners wird ein neues Router-Objekt mit den routes erstellt und gestartet. Der Router überwacht die URL und ruft die show-Funktion des entsprechenden route-Objekts auf, wenn die URL geändert wird section.io.
-            */
-        window.addEventListener("load", () => {
-            /**
-             * Hilfsfunktion zum Umschalten des sichtbaren Inhalts
-             */
-            let swapContent = (id, title) => {
-                document.querySelectorAll("main").forEach(mainElement => {
-                    mainElement.classList.add("hidden");
-                })
-    
-                let element = document.querySelector(`#${id}`);
-                if (element) element.classList.remove("hidden");
-    
-                document.title = `${title} | WebProg Prüfungsaugabe 2`;
-    
-            }
-    
-            /**
-             * Konfiguration des URL-Routers
-             */
-            let routes = [
-                {
-                    url: "^/$",
-                    show: () => swapContent("main-Page", "Startseite"),
-                },{
-                    url: "^/user/([^/]+)/$", //test versuch
-                    show: () => swapContent("user-beschreibung", "User Beschreibung"),
-                },{
-                    url: "^/cart/([^/]+)/$", //Test versuch
-                    show: () => swapContent("Einkaufswagen", "Einkaufswagen"),
-    
-                }
-                
-            ];
-    
-            let router = new Router(routes);
-            router.start();
-            let backLink = router.createBackLink();
-        });
-        </script>
   
     </head>
     <body>

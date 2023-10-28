@@ -1,8 +1,71 @@
-let backLink = document.createElement('a');
 
 
-/*
-        In diesem Teil stehen alle funktionen und Klassen, die das gerüst für den SPA router bilden
+document.addEventListener("DOMContentLoaded", function (){
+    console.log("DOM ist loaded");
+
+    //deklarierung der variablen
+    let submitButton = document.getElementById("submit");
+    let hintP = document.getElementById("hint");
+    let ergebnisDiv = document.getElementById("ergebnis");
+    let searchInput = document.getElementById("search");
+    let detail = document.getElementById("detailbeschreibung");
+    let cartinhalt = document.getElementById("produkteImEinkaufswagen");
+    let mainPage = document.getElementById("main-Page");
+    let userBeschreibung = document.getElementById("user-beschreibung");
+    let einkaufsWagen = document.getElementById("Einkaufswagen");
+    let backLink = document.createElement('a');
+
+                /*
+        Der gegebene Code definiert einen Event-Listener für das load-Ereignis des window-Objekts. Dies bedeutet, dass der Code innerhalb der Funktion erst ausgeführt wird, nachdem die gesamte Seite geladen wurde developer.mozilla.org.
+
+        Innerhalb des load-Event-Listeners werden zwei Funktionen definiert: swapContent und routes.
+
+        Die Funktion swapContent wird verwendet, um den sichtbaren Inhalt einer Seite zu wechseln. Sie nimmt zwei Parameter: id und title. id ist die ID des Elements, das angezeigt werden soll, und title ist der Titel, der im Dokument angezeigt werden soll. Die Funktion durchläuft alle main-Elemente auf der Seite und fügt ihnen die hidden-Klasse hinzu, um sie auszublenden. Dann sucht sie das Element mit der übergebenen id und entfernt die hidden-Klasse von diesem Element, um es anzuzeigen. Schließlich ändert sie den Titel des Dokuments auf den übergebenen title section.io.
+
+        Die Variable routes ist ein Array von Objekten, die die Konfiguration für einen Router darstellen. Jedes Objekt in routes hat zwei Eigenschaften: url und show. url ist ein regulärer Ausdruck, der die URL übereinstimmt, die den Router auslösen soll, und show ist eine Funktion, die aufgerufen wird, wenn die URL übereinstimmt. Die Funktion show nimmt ein Array von Übereinstimmungen als Parameter und verwendet diese, um den sichtbaren Inhalt der Seite zu ändern section.io.
+
+        Am Ende des load-Event-Listeners wird ein neues Router-Objekt mit den routes erstellt und gestartet. Der Router überwacht die URL und ruft die show-Funktion des entsprechenden route-Objekts auf, wenn die URL geändert wird section.io.
+            */
+        window.addEventListener("load", () => {
+            /**
+             * Hilfsfunktion zum Umschalten des sichtbaren Inhalts
+             */
+            let swapContent = (id, title) => {
+                document.querySelectorAll("main").forEach(mainElement => {
+                    mainElement.classList.add("hidden");
+                })
+    
+                let element = document.querySelector(`#${id}`);
+                if (element) element.classList.remove("hidden");
+    
+                document.title = `${title} | WebProg Prüfungsaugabe 2`;
+    
+            }
+    
+            /**
+             * Konfiguration des URL-Routers
+             */
+            let routes = [
+                {
+                    url: "^/$",
+                    show: () => swapContent("main-Page", "Startseite"),
+                },{
+                    url: "^/user/([^/]+)/$", //test versuch
+                    show: () => swapContent("user-beschreibung", "User Beschreibung"),
+                },{
+                    url: "^/cart/([^/]+)/$", //Test versuch
+                    show: () => swapContent("Einkaufswagen", "Einkaufswagen"),
+    
+                }
+                
+            ];
+    
+            let router = new Router(routes);
+            router.start();
+            let backLink = router.createBackLink();
+        });
+        /*
+        In diesem Teil stehen alle Funktionen und Klassen, die das Gerüst für den SPA Router bilden
         
         Der gegebene Code definiert eine Router-Klasse, die zur Handhabung von Routen in einer Webanwendung verwendet werden kann. Hier ist eine Schritt-für-Schritt-Erklärung des Codes:
 
@@ -24,6 +87,7 @@ let backLink = document.createElement('a');
                 this._previousHash = null; // ich glaube das ist die bedingung für den zurück link
 
                 window.addEventListener("hashchange", () => this._handleRouting());
+
             }
 
 
@@ -35,6 +99,7 @@ let backLink = document.createElement('a');
             stop() {
                 this._started = false;
             }
+
             _handleRouting() {
                 this._previousHash = location.hash; // übergabe des vorherigen links für den zurück button
                 let url = location.hash.slice(1);
@@ -55,39 +120,32 @@ let backLink = document.createElement('a');
             }
 
             createBackLink(){
-                backLink.href = "Zurück"
-                backLink.textContent = 'Zurück';
+                backLink.href = "#/Zurück"
+                backLink.textContent = 'Zurück zur Suchseite';
 
                 backLink.addEventListener("click", function(event) {
                     event.preventDefault();
+                    //was macht dieses If statement genau? 
+                    //Funktionalität nicht ganz klar
+                    //scheinbar ist der PreviousHash nicht definiert oder nicht richtig definiert
                     if (this._previousHash) {
                         window.location.hash = this._previousHash;
                     } else {
                         window.location.hash = "/";
                     }
-
-                    mainPage.style.display = "block";
-                    userBeschreibung.style.display = "none";
-                    einkausWagen.style.display = "none";
+                    console.log(this._previousHash); //das wird bisher garnicht ausgegeben
+                    test();
+                   
                 });
             }
         }
-
-document.addEventListener("DOMContentLoaded", function (){
-    console.log("DOM ist loaded");
-
-    //deklarierung der variablen
-    let submitButton = document.getElementById("submit");
-    let hintP = document.getElementById("hint");
-    let ergebnisDiv = document.getElementById("ergebnis");
-    let searchInput = document.getElementById("search");
-    let detail = document.getElementById("detailbeschreibung");
-    let cartinhalt = document.getElementById("produkteImEinkaufswagen");
-    let mainPage = document.getElementById("main-Page");
-    let userBeschreibung = document.getElementById("user-beschreibung");
-    let einkausWagen = document.getElementById("Einkaufswagen");
+    
    
-
+    function test(){
+        mainPage.style.display = "block";
+        userBeschreibung.style.display = "none";
+        einkaufsWagen.style.display = "none";
+    }
     
 
      // Diese Funktion reagiert auf den Button und ändert den Hinweistext. Außerdem wird bei einem input die fetchUser funktion aufgerufen.
@@ -207,9 +265,9 @@ document.addEventListener("DOMContentLoaded", function (){
         detail.appendChild(backLink);
 
 
-        mainPage.style.display = "block";
+        mainPage.style.display = "none";
         userBeschreibung.style.display = "block";
-        einkausWagen.style.display = "none";
+        einkaufsWagen.style.display = "none";
    
         })
     }
@@ -256,7 +314,7 @@ document.addEventListener("DOMContentLoaded", function (){
             
             mainPage.style.display = "none";
             userBeschreibung.style.display = "none";
-            einkausWagen.style.display = "block";
+            einkaufsWagen.style.display = "block";
 
         })
         .catch(error => {

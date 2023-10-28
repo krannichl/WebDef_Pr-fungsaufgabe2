@@ -1,3 +1,6 @@
+let backLink = document.createElement('a');
+
+
 /*
         In diesem Teil stehen alle funktionen und Klassen, die das gerüst für den SPA router bilden
         
@@ -63,10 +66,9 @@
                         window.location.hash = "/";
                     }
 
-                    /*wasIstDas.style.display = "none";
-                    searchPage.style.display = "block";
-                    showUserPage.style.display = "none";
-                    cartPage.style.display = "none";*/
+                    mainPage.style.display = "block";
+                    userBeschreibung.style.display = "none";
+                    einkausWagen.style.display = "none";
                 });
             }
         }
@@ -81,9 +83,10 @@ document.addEventListener("DOMContentLoaded", function (){
     let searchInput = document.getElementById("search");
     let detail = document.getElementById("detailbeschreibung");
     let cartinhalt = document.getElementById("produkteImEinkaufswagen");
-    //let mainPage = document.getElementById("main-Page");
-    //let userBeschreibung = document.getElementById("user-beschreibung");
-    //let einkausWagen = document.getElementById("Einkaufswagen");
+    let mainPage = document.getElementById("main-Page");
+    let userBeschreibung = document.getElementById("user-beschreibung");
+    let einkausWagen = document.getElementById("Einkaufswagen");
+   
 
     
 
@@ -176,6 +179,7 @@ document.addEventListener("DOMContentLoaded", function (){
         let alter = document.createElement('p');
         let idNR = document.createElement('p');
         let cartLink = document.createElement('a');
+        let spacer = document.createElement('p');
 
 
         nameUser.textContent = data.users[0].firstName;
@@ -199,10 +203,13 @@ document.addEventListener("DOMContentLoaded", function (){
         detail.appendChild(geschlecht);
         detail.appendChild(alter);
         detail.appendChild(cartLink);
+        detail.appendChild(spacer);
         detail.appendChild(backLink);
 
 
-        suchergebnisseAnzeigen();
+        mainPage.style.display = "block";
+        userBeschreibung.style.display = "block";
+        einkausWagen.style.display = "none";
    
         })
     }
@@ -246,7 +253,10 @@ document.addEventListener("DOMContentLoaded", function (){
 
             cartinhalt.appendChild(blocker);
             cartinhalt.appendChild(backLink);
-            produkteAnzeigen();
+            
+            mainPage.style.display = "none";
+            userBeschreibung.style.display = "none";
+            einkausWagen.style.display = "block";
 
         })
         .catch(error => {

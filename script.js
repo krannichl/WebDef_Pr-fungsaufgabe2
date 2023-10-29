@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function (){
             constructor(routes) {
                 this._routes = routes;
                 this._started = false;
-                this._previousHash = null; // ich glaube das ist die bedingung für den zurück link
+                this._previousHash = location.hash; // ich glaube das ist die bedingung für den zurück link
 
                 window.addEventListener("hashchange", () => this._handleRouting());
 
@@ -118,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function (){
 
                 route.show(matches);
             }
+    
 
             createBackLink(){
                 backLink.href = "#/Zurück"
@@ -125,27 +126,26 @@ document.addEventListener("DOMContentLoaded", function (){
 
                 backLink.addEventListener("click", function(event) {
                     event.preventDefault();
-                    //was macht dieses If statement genau? 
-                    //Funktionalität nicht ganz klar
-                    //scheinbar ist der PreviousHash nicht definiert oder nicht richtig definiert
-                    if (this._previousHash) {
-                        window.location.hash = this._previousHash;
-                    } else {
-                        window.location.hash = "/";
-                    }
-                    console.log(this._previousHash); //das wird bisher garnicht ausgegeben
-                    test();
-                   
-                });
+                    
+                    window.location.hash = "/";
+                    console.log(this._previousHash); 
+
+                    //blended das entsprechende main element aus, wird in der backLink function aufgerufen
+                    mainPage.style.display = "block";
+                    userBeschreibung.style.display = "none";
+                    einkaufsWagen.style.display = "none";
+                    
+                    // "Clearen" zuvor erzeugter html elemente.
+                    ergebnisDiv.innerHTML="";
+                    detail.innerHTML="";
+                    cartinhalt.innerHTML="";
+                    this._previousHash=location.hash;
+                    
+                }.bind(this));
             }
         }
     
-   
-    function test(){
-        mainPage.style.display = "block";
-        userBeschreibung.style.display = "none";
-        einkaufsWagen.style.display = "none";
-    }
+    
     
 
      // Diese Funktion reagiert auf den Button und ändert den Hinweistext. Außerdem wird bei einem input die fetchUser funktion aufgerufen.

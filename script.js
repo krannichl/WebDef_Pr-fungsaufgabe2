@@ -207,6 +207,9 @@ document.addEventListener("DOMContentLoaded", function (){
                 ergebnisDiv.appendChild(userLink);
                 ergebnisDiv.appendChild(blocker);
                 ergebnisDiv.appendChild(backLink);
+
+                //ergebnisDiv.classList.add("d-flex justify-content-center");
+
                 
                 
             })
@@ -263,6 +266,7 @@ document.addEventListener("DOMContentLoaded", function (){
         detail.appendChild(cartLink);
         detail.appendChild(spacer);
         detail.appendChild(backLink);
+
 
 
         mainPage.style.display = "none";

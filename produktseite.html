@@ -23,7 +23,7 @@
 
         <header>
             <!-- überschrift -->
-            <h1>
+            <h1 class="d-flex justify-content-center">
                 <span class="app-title">User Suche & mehr</span>
             </h1>
         </header>
@@ -35,7 +35,7 @@
 
                     <!--Suchleiste-->
                     <div class="col-sm">
-                        <input class="form-control mr-sm-2 " type="search" placeholder="Search" aria-label="Search" id="search">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search">
                     </div>
 
                     <!--Suchbutton-->
@@ -52,19 +52,23 @@
             </div>
             
             <!--in  dieses div werden die ergebnisse der suche geschrieben-->
-            <div id="ergebnis">
+            <div class="row">
+                    
+                <div id="ergebnis" class="d-flex flex-column "></div>
+
             </div>
+
         </main>
 
 
         <main id="user-beschreibung" class="hidden">
-            <div id="detailbeschreibung"></div>
+            <div id="detailbeschreibung" class="d-flex flex-column"></div>
            <!--<p>test user-beschreibung</p>-->
 
         </main>
 
         <main id="Einkaufswagen" class="hidden">
-            <div id="produkteImEinkaufswagen">
+            <div id="produkteImEinkaufswagen" class="d-flex flex-column">
                 
             </div>
             <!--<p>test einkaufswagen</p>-->

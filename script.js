@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function (){
                     userBeschreibung.style.display = "none";
                     einkaufsWagen.style.display = "none";
                     
-                    // "Clearen" zuvor erzeugter html elemente.
+                    // "Clearen" zuvor erzeugter html elemente
                     ergebnisDiv.innerHTML="";
                     detail.innerHTML="";
                     cartinhalt.innerHTML="";

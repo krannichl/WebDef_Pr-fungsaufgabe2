@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function (){
             createBackLink(){
                 backLink.href = "#/Zurück"
                 backLink.textContent = 'Zurück zur Suchseite';
-                backLink.setAttribute('class',"btn btn-outline-success w-50");
+                backLink.setAttribute('class',"btn btn-outline-success w-100");
 
                 backLink.addEventListener("click", function(event) {
                     event.preventDefault();
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function (){
                 // dieser Funktion werden die abgerufenen daten mit gegegeben um eine dynamische abfrage der weiteren informationen zu ermöglichen
                 userLink.href = `#/user/${data.users[0].username}/`;
                 userLink.textContent = data.users[0].username; 
-                userLink.setAttribute('class',"btn btn-outline-success w-50");
+                userLink.setAttribute('class',"btn btn-outline-success w-100");
                 
                 userLink.addEventListener("click", function(event){
                     event.preventDefault();
@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function (){
 
         cartLink.href = `#/user/${data.users[0].username}/Warenkorb`;
         cartLink.textContent = 'Warenkorb'; 
-        cartLink.setAttribute('class',"btn btn-outline-success w-50");
+        cartLink.setAttribute('class',"btn btn-outline-success w-100");
                 
         cartLink.addEventListener("click", function(event){
             event.preventDefault();

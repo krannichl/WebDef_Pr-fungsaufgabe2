@@ -21,7 +21,7 @@
     </head>
     <body>
 
-        <header>
+        <header id="header-zeile" class="hidden">
             <!-- überschrift -->
             <h1 class="d-flex justify-content-center">
                 <span class="app-title">User Suche & mehr</span>
@@ -31,44 +31,49 @@
         <main id="main-Page" class="hidden">
             <!--Bootstrap einbindung zur anordnung & erzeugen einer suchleiste-->
             <div class="container">
-                <div class="row">
 
-                    <!--Suchleiste-->
-                    <div class="col-sm">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search">
+                <div class="d-flex justify-content-center">
+                    <div class="col-md-8 ">
+                      <!-- Search bar -->
+                        <form class="form-inline w-100 my-2 my-lg-0" id="eingabeFormular">
+                            <div class="input-group">
+                                <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="search">
+                                    <div class="input-group-append">
+                                        <!-- Button-->
+                                        <button class="btn btn-outline-success" type="submit" id="submit">Search</button>
+                                    </div>
+                            </div>
+                        </form>
                     </div>
-
-                    <!--Suchbutton-->
-                    <div class="col-sm-2">
-                        <button class="btn btn-outline-success" type="submit" id="submit">Search</button>
-                    </div>
-
                 </div>
             </div>
             
             <!--Hiweistext-->
             <div>
-                <p class="d-flex justify-content-center" id="hint">Bitte nach dem Nachnamen des Users suchen, bspw. Medhurst</p>
+                <p class="d-flex justify-content-center mt-3 mx-3" id="hint">Bitte nach dem Nachnamen des Users suchen, bspw. Medhurst</p>
             </div>
             
             <!--in  dieses div werden die ergebnisse der suche geschrieben-->
             <div class="row">
                     
-                <div id="ergebnis" class="d-flex flex-column "></div>
+                <div id="ergebnis" class="row justify-content-md-center">
+                </div>
 
             </div>
 
         </main>
 
 
-        <main id="user-beschreibung" class="hidden">
-            <div id="detailbeschreibung" class="d-flex flex-column"></div>
+        <main id="user-beschreibung" class="hidden position-absolute top-50 start-50 translate-middle">
+            <div id="detailbeschreibung" class="row justify-content-md-center">
+
+            </div>
            <!--<p>test user-beschreibung</p>-->
 
         </main>
 
-        <main id="Einkaufswagen" class="hidden">
-            <div id="produkteImEinkaufswagen" class="d-flex flex-column">
+        <main id="Einkaufswagen" class="hidden position-absolute top-50 start-50 translate-middle">
+            <div id="produkteImEinkaufswagen" class="row justify-content-md-center">
                 
             </div>
             <!--<p>test einkaufswagen</p>-->
@@ -77,7 +82,7 @@
         </main>
 
         <footer  class="d-flex justify-content-center fixed-bottom">
-            in den Footer muss auch noch was, oder er soll erkenntlich sein
+            <p>nur die erinnerung, dass ich mich noch um einen Footer kümmern muss</p>
         </footer>
 
     </body>

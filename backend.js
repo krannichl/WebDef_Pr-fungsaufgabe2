@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function (){
     let searchPage = document.getElementById("Suchseite");
     let showUserPage = document.getElementById("benutzer");
     let cartPage = document.getElementById("Einkaufswagen");
-    let wasIstDas = document.getElementById("produktbeschreibung");
+    //let wasIstDas = document.getElementById("produktbeschreibung");
 
     
     window.addEventListener("load", () => {
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function (){
                     window.location.hash = "/";
                 }
 
-                wasIstDas.style.display = "none";
+                wasIstDas.style.display = "none";  
                 searchPage.style.display = "block";
                 showUserPage.style.display = "none";
                 cartPage.style.display = "none";

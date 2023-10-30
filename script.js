@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", function (){
     let userBeschreibung = document.getElementById("user-beschreibung");
     let einkaufsWagen = document.getElementById("Einkaufswagen");
     let backLink = document.createElement('a');
+    let kopfzeile = document.getElementById("header-zeile");
+    let formInput = document.getElementById("eingabeFormular");
 
                 /*
         Der gegebene Code definiert einen Event-Listener für das load-Ereignis des window-Objekts. Dies bedeutet, dass der Code innerhalb der Funktion erst ausgeführt wird, nachdem die gesamte Seite geladen wurde developer.mozilla.org.
@@ -123,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function (){
             createBackLink(){
                 backLink.href = "#/Zurück"
                 backLink.textContent = 'Zurück zur Suchseite';
+                backLink.setAttribute('class',"btn btn-outline-success w-50");
 
                 backLink.addEventListener("click", function(event) {
                     event.preventDefault();
@@ -131,6 +134,7 @@ document.addEventListener("DOMContentLoaded", function (){
                     console.log(this._previousHash); 
 
                     //blended das entsprechende main element aus, wird in der backLink function aufgerufen
+                    kopfzeile.style.display = "block";
                     mainPage.style.display = "block";
                     userBeschreibung.style.display = "none";
                     einkaufsWagen.style.display = "none";
@@ -139,6 +143,9 @@ document.addEventListener("DOMContentLoaded", function (){
                     ergebnisDiv.innerHTML="";
                     detail.innerHTML="";
                     cartinhalt.innerHTML="";
+                    hintP.innerHTML="Bitte nach dem Nachnamen des Users suchen, bspw. Medhurst";
+                    
+                    formInput.reset();
                     this._previousHash=location.hash;
                     
                 }.bind(this));
@@ -196,6 +203,7 @@ document.addEventListener("DOMContentLoaded", function (){
                 // dieser Funktion werden die abgerufenen daten mit gegegeben um eine dynamische abfrage der weiteren informationen zu ermöglichen
                 userLink.href = `#/user/${data.users[0].username}/`;
                 userLink.textContent = data.users[0].username; 
+                userLink.setAttribute('class',"btn btn-outline-success w-50");
                 
                 userLink.addEventListener("click", function(event){
                     event.preventDefault();
@@ -244,13 +252,21 @@ document.addEventListener("DOMContentLoaded", function (){
 
 
         nameUser.textContent = data.users[0].firstName;
+        nameUser.setAttribute('class',"d-flex justify-content-center"); 
                
         geschlecht.textContent = 'Geschlecht: ' + data.users[0].gender; 
+        geschlecht.setAttribute('class',"d-flex justify-content-center");
+
         alter.textContent = 'Alter: ' + data.users[0].age + ' Jahre';
+        alter.setAttribute('class',"d-flex justify-content-center");
+
         idNR.textContent = 'ID: ' + data.users[0].id;
+        idNR.setAttribute('class',"d-flex justify-content-center");
+
 
         cartLink.href = `#/user/${data.users[0].username}/Warenkorb`;
         cartLink.textContent = 'Warenkorb'; 
+        cartLink.setAttribute('class',"btn btn-outline-success w-50");
                 
         cartLink.addEventListener("click", function(event){
             event.preventDefault();
@@ -268,10 +284,11 @@ document.addEventListener("DOMContentLoaded", function (){
         detail.appendChild(backLink);
 
 
-
+        kopfzeile.style.display = "none";
         mainPage.style.display = "none";
         userBeschreibung.style.display = "block";
         einkaufsWagen.style.display = "none";
+
    
         })
     }
@@ -297,11 +314,15 @@ document.addEventListener("DOMContentLoaded", function (){
 
             console.log('Received data:', data.carts);
             
-            const blocker = document.createElement('p');
+            const ueberschrift = document.createElement('h2');
             const einkauf = document.createElement('p');
             
+            ueberschrift.textContent = 'Einkaufswagen des Users';
+            ueberschrift.setAttribute('class',"d-flex justify-content-center");
+            cartinhalt.appendChild(ueberschrift);
 
             einkauf.textContent = 'Warenwert: ' + data.carts[0].total + '€';
+            einkauf.setAttribute('class',"d-flex justify-content-center");
             
             cartinhalt.appendChild(einkauf);
 
@@ -309,13 +330,14 @@ document.addEventListener("DOMContentLoaded", function (){
             data.carts[0].products.forEach(product => {
                 let productInCart = document.createElement('p');
                 productInCart.textContent = product.title;
+                productInCart.setAttribute('class',"d-flex justify-content-center");
                 cartinhalt.appendChild(productInCart);
 
             });
-
-            cartinhalt.appendChild(blocker);
+            
             cartinhalt.appendChild(backLink);
             
+            kopfzeile.style.display = "none";
             mainPage.style.display = "none";
             userBeschreibung.style.display = "none";
             einkaufsWagen.style.display = "block";

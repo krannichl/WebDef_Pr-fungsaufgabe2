@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function (){
     let backLink = document.createElement('a');
     let kopfzeile = document.getElementById("header-zeile");
     let formInput = document.getElementById("eingabeFormular");
+    let userList = document.getElementById("benutzerListe");
 
                 /*
         Der gegebene Code definiert einen Event-Listener für das load-Ereignis des window-Objekts. Dies bedeutet, dass der Code innerhalb der Funktion erst ausgeführt wird, nachdem die gesamte Seite geladen wurde developer.mozilla.org.
@@ -125,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function (){
             createBackLink(){
                 backLink.href = "#/Zurück"
                 backLink.textContent = 'Zurück zur Suchseite';
-                backLink.setAttribute('class',"btn btn-outline-success w-100");
+                backLink.setAttribute('class',"btn btn-outline-success w-100 mb-3");
 
                 backLink.addEventListener("click", function(event) {
                     event.preventDefault();
@@ -140,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function (){
                     einkaufsWagen.style.display = "none";
                     
                     // "Clearen" zuvor erzeugter html elemente
-                    ergebnisDiv.innerHTML="";
+                    userList.innerHTML="";
                     detail.innerHTML="";
                     cartinhalt.innerHTML="";
                     hintP.innerHTML="Bitte nach dem Nachnamen des Users suchen, bspw. Medhurst";
@@ -196,31 +197,27 @@ document.addEventListener("DOMContentLoaded", function (){
             .then(data => {
                 console.log('Received data:', data.users);
 
-                
-                const blocker = document.createElement('p');
-                const userLink = document.createElement('a');
-                
+                               
                 // hier wird ein link dynamisch erzeugt, ist nach dem Username des Users benannt
                 // Dieser link erhält einen EventListener, wenn auf den Link geklickt wird, wird die userPage funktion aufgerufen
                 // dieser Funktion werden die abgerufenen daten mit gegegeben um eine dynamische abfrage der weiteren informationen zu ermöglichen
-                userLink.href = `#/user/${data.users[0].username}/`;
-                userLink.textContent = data.users[0].username; 
-                userLink.setAttribute('class',"btn btn-outline-success w-100");
                 
-                userLink.addEventListener("click", function(event){
-                    event.preventDefault();
-                    userPage(data);    
-                    window.location.hash = `/user/${data.users[0].username}/`;
+                data.users.forEach(user =>{
+                    let userLink = document.createElement('a');
+                    userLink.href = `#/user/${user.username}/`;
+                    userLink.textContent = user.username; 
+                    userLink.setAttribute('class',"list-group-item list-group-item-action"); //btn btn-outline-success w-100 mb-3
+                    
+                    userLink.addEventListener("click", function(event){
+                        event.preventDefault();
+                        userPage(user);    
+                        window.location.hash = `/user/${user.username}/`;
 
-                });
+                    });
 
-                ergebnisDiv.appendChild(userLink);
-                ergebnisDiv.appendChild(blocker);
-                ergebnisDiv.appendChild(backLink);
-
-                //ergebnisDiv.classList.add("d-flex justify-content-center");
-
-                
+                    userList.appendChild(userLink);
+                })
+                userList.appendChild(backLink);               
                 
             })
 
@@ -234,47 +231,36 @@ document.addEventListener("DOMContentLoaded", function (){
     // ansonsten funktioniert Sie analog zur fetchUser funktion.
     // Diese Funktion hängt das ergebnis in der main mit der id user-beschreibung an, an das div "detailbeschreibung"
     function userPage(data){
-        fetch(`https://dummyjson.com/users/search?q=${data.users[0].username}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            console.log("user geladen");
-            return response.json();
-        })
-        .then(data => {
-            console.log('Received data:', data.users);
-        
+
         let nameUser = document.createElement("h2");
         let geschlecht = document.createElement('p');
         let alter = document.createElement('p');
         let idNR = document.createElement('p');
         let cartLink = document.createElement('a');
-        let spacer = document.createElement('p');
 
 
-        nameUser.textContent = data.users[0].firstName;
-        nameUser.setAttribute('class',"d-flex justify-content-center"); 
+        nameUser.textContent = data.firstName;
+        nameUser.setAttribute('class',"d-flex justify-content-center mb-6"); 
                
-        geschlecht.textContent = 'Geschlecht: ' + data.users[0].gender; 
+        geschlecht.textContent = 'Geschlecht: ' + data.gender; 
         geschlecht.setAttribute('class',"d-flex justify-content-center");
 
-        alter.textContent = 'Alter: ' + data.users[0].age + ' Jahre';
+        alter.textContent = 'Alter: ' + data.age + ' Jahre';
         alter.setAttribute('class',"d-flex justify-content-center");
 
-        idNR.textContent = 'ID: ' + data.users[0].id;
+        idNR.textContent = 'ID: ' + data.id;
         idNR.setAttribute('class',"d-flex justify-content-center");
 
 
-        cartLink.href = `#/user/${data.users[0].username}/Warenkorb`;
+        cartLink.href = `#/user/${data.username}/Warenkorb`;
         cartLink.textContent = 'Warenkorb'; 
-        cartLink.setAttribute('class',"btn btn-outline-success w-100");
+        cartLink.setAttribute('class',"btn btn-outline-success w-100 mt-3 mb-3");
                 
         cartLink.addEventListener("click", function(event){
             event.preventDefault();
-            console.log('User ID:', data.users[0].id);
-            window.location.hash = `/cart/${data.users[0].username}/`;
-            fetchCart(data.users[0].id);                    
+            console.log('User ID:', data.id);
+            window.location.hash = `/cart/${data.username}/`;
+            fetchCart(data.id);                    
         })
 
         detail.appendChild(nameUser);
@@ -282,7 +268,6 @@ document.addEventListener("DOMContentLoaded", function (){
         detail.appendChild(geschlecht);
         detail.appendChild(alter);
         detail.appendChild(cartLink);
-        detail.appendChild(spacer);
         detail.appendChild(backLink);
 
 
@@ -292,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function (){
         einkaufsWagen.style.display = "none";
 
    
-        })
+        //})
     }
 
     // Die fetchCart funktion bekommt die abgerufene UserID übergeben, da man carts nur anhand von UserIDs suchen kann

@@ -171,7 +171,8 @@ document.addEventListener("DOMContentLoaded", function (){
                 fetchUser(input);
             }
             else{
-                hintP.textContent = 'Leider wurden hierzu keine treffer gefunden. :(';
+                alert("Bitte geben Sie einen Suchbegriff ein!");
+                hintP.textContent = 'Bitte geben Sie einen Suchbegriff ein! :(';
                 ergebnis.textContent = '';     
             }
         
@@ -196,28 +197,35 @@ document.addEventListener("DOMContentLoaded", function (){
             })
             .then(data => {
                 console.log('Received data:', data.users);
-
-                               
-                // hier wird ein link dynamisch erzeugt, ist nach dem Username des Users benannt
-                // Dieser link erhält einen EventListener, wenn auf den Link geklickt wird, wird die userPage funktion aufgerufen
-                // dieser Funktion werden die abgerufenen daten mit gegegeben um eine dynamische abfrage der weiteren informationen zu ermöglichen
-                
-                data.users.forEach(user =>{
-                    let userLink = document.createElement('a');
-                    userLink.href = `#/user/${user.username}/`;
-                    userLink.textContent = user.username; 
-                    userLink.setAttribute('class',"list-group-item list-group-item-action"); //btn btn-outline-success w-100 mb-3
+                if(data.users.length>0){
+                                
+                    // hier wird ein link dynamisch erzeugt, ist nach dem Username des Users benannt
+                    // Dieser link erhält einen EventListener, wenn auf den Link geklickt wird, wird die userPage funktion aufgerufen
+                    // dieser Funktion werden die abgerufenen daten mit gegegeben um eine dynamische abfrage der weiteren informationen zu ermöglichen
                     
-                    userLink.addEventListener("click", function(event){
-                        event.preventDefault();
-                        userPage(user);    
-                        window.location.hash = `/user/${user.username}/`;
+                    data.users.forEach(user =>{
+                        let userLink = document.createElement('a');
+                        userLink.href = `#/user/${user.username}/`;
+                        userLink.textContent = user.username; 
+                        userLink.setAttribute('class',"list-group-item list-group-item-action"); //btn btn-outline-success w-100 mb-3
+                        
+                        userLink.addEventListener("click", function(event){
+                            event.preventDefault();
+                            userPage(user);    
+                            window.location.hash = `/user/${user.username}/`;
 
-                    });
+                        });
 
-                    userList.appendChild(userLink);
-                })
-                userList.appendChild(backLink);               
+                        userList.appendChild(userLink);
+                        userList.appendChild(backLink);   
+                    })
+                }
+                else{
+                    
+                    hintP.innerHTML="Bitte nach dem Nachnamen des Users suchen, bspw. Medhurst";
+                    alert('Leider gibt es keine treffer zu diesem begriff :(');               
+                    formInput.reset();
+                }
                 
             })
 
@@ -275,9 +283,7 @@ document.addEventListener("DOMContentLoaded", function (){
         mainPage.style.display = "none";
         userBeschreibung.style.display = "block";
         einkaufsWagen.style.display = "none";
-
-   
-        //})
+        
     }
 
     // Die fetchCart funktion bekommt die abgerufene UserID übergeben, da man carts nur anhand von UserIDs suchen kann
@@ -300,34 +306,39 @@ document.addEventListener("DOMContentLoaded", function (){
         .then(data => {
 
             console.log('Received data:', data.carts);
-            
-            const ueberschrift = document.createElement('h2');
-            const einkauf = document.createElement('p');
-            
-            ueberschrift.textContent = 'Einkaufswagen des Users';
-            ueberschrift.setAttribute('class',"d-flex justify-content-center");
-            cartinhalt.appendChild(ueberschrift);
 
-            einkauf.textContent = 'Warenwert: ' + data.carts[0].total + '€';
-            einkauf.setAttribute('class',"d-flex justify-content-center");
-            
-            cartinhalt.appendChild(einkauf);
+            if(data.carts.length>0){                
+                const ueberschrift = document.createElement('h2');
+                const einkauf = document.createElement('p');
+                
+                ueberschrift.textContent = 'Einkaufswagen des Users';
+                ueberschrift.setAttribute('class',"d-flex justify-content-center");
+                cartinhalt.appendChild(ueberschrift);
 
-            // Schleife, die für jedes Element im Warenkorb ein <p>-element erzeugt & Anhängt
-            data.carts[0].products.forEach(product => {
-                let productInCart = document.createElement('p');
-                productInCart.textContent = product.title;
-                productInCart.setAttribute('class',"d-flex justify-content-center");
-                cartinhalt.appendChild(productInCart);
+                einkauf.textContent = 'Warenwert: ' + data.carts[0].total + '€';
+                einkauf.setAttribute('class',"d-flex justify-content-center");
+                
+                cartinhalt.appendChild(einkauf);
 
-            });
-            
-            cartinhalt.appendChild(backLink);
-            
-            kopfzeile.style.display = "none";
-            mainPage.style.display = "none";
-            userBeschreibung.style.display = "none";
-            einkaufsWagen.style.display = "block";
+                // Schleife, die für jedes Element im Warenkorb ein <p>-element erzeugt & Anhängt
+                data.carts[0].products.forEach(product => {
+                    let productInCart = document.createElement('p');
+                    productInCart.textContent = product.title;
+                    productInCart.setAttribute('class',"d-flex justify-content-center");
+                    cartinhalt.appendChild(productInCart);
+
+                });
+                
+                cartinhalt.appendChild(backLink);
+                
+                kopfzeile.style.display = "none";
+                mainPage.style.display = "none";
+                userBeschreibung.style.display = "none";
+                einkaufsWagen.style.display = "block";
+            }
+            else{
+                alert("Dieser User hat keinen Warenkorb!");
+            }
 
         })
         .catch(error => {

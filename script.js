@@ -212,7 +212,6 @@ document.addEventListener("DOMContentLoaded", function (){
                     // dieser Funktion werden die abgerufenen daten mit gegegeben um eine dynamische abfrage der weiteren informationen zu ermöglichen
                     
                     data.users.forEach(user =>{
-                        console.log("penis oben");
                         let userLink = document.createElement('a');
                         userLink.href = `#/user/${user.username}/`;
                         userLink.textContent = user.username; 
@@ -222,7 +221,6 @@ document.addEventListener("DOMContentLoaded", function (){
                             event.preventDefault();
                             userPage(user);    
                             window.location.hash = `/user/${user.username}/`;
-                            console.log("penis");
 
                         });
 
@@ -250,7 +248,6 @@ document.addEventListener("DOMContentLoaded", function (){
     // ansonsten funktioniert Sie analog zur fetchUser funktion.
     // Diese Funktion hängt das ergebnis in der main mit der id user-beschreibung an, an das div "detailbeschreibung"
     function userPage(data){
-        console.log("Penis UserPage")
         detail.innerHTML = "";
 
         let nameUser = document.createElement("h2");

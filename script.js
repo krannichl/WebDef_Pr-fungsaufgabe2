@@ -6,10 +6,11 @@ document.addEventListener("DOMContentLoaded", function (){
     //deklarierung der variablen
     let submitButton = document.getElementById("submit");
     let hintP = document.getElementById("hint");
-    let ergebnisDiv = document.getElementById("ergebnis");
+    //let ergebnisDiv = document.getElementById("ergebnis");
     let searchInput = document.getElementById("search");
     let detail = document.getElementById("detailbeschreibung");
-    let cartinhalt = document.getElementById("produkteImEinkaufswagen");
+    let einkaufswagenHeadline = document.getElementById("headline");
+    let sum = document.getElementById("Warenwert");
     let mainPage = document.getElementById("main-Page");
     let userBeschreibung = document.getElementById("user-beschreibung");
     let einkaufsWagen = document.getElementById("Einkaufswagen");
@@ -17,6 +18,8 @@ document.addEventListener("DOMContentLoaded", function (){
     let kopfzeile = document.getElementById("header-zeile");
     let formInput = document.getElementById("eingabeFormular");
     let userList = document.getElementById("benutzerListe");
+    let cartinhalt = document.getElementById("produktTable"); //produkteImEinkaufswagen
+    let tblBody = document.createElement("tbody");
 
                 /*
         Der gegebene Code definiert einen Event-Listener für das load-Ereignis des window-Objekts. Dies bedeutet, dass der Code innerhalb der Funktion erst ausgeführt wird, nachdem die gesamte Seite geladen wurde developer.mozilla.org.
@@ -42,6 +45,11 @@ document.addEventListener("DOMContentLoaded", function (){
                 if (element) element.classList.remove("hidden");
     
                 document.title = `${title} | WebProg Prüfungsaugabe 2`;
+
+                kopfzeile.style.display = "block";
+                mainPage.style.display = "block";
+                userBeschreibung.style.display = "none";
+                einkaufsWagen.style.display = "none";
     
             }
     
@@ -221,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function (){
                     })
                 }
                 else{
-                    
+
                     hintP.innerHTML="Bitte nach dem Nachnamen des Users suchen, bspw. Medhurst";
                     alert('Leider gibt es keine treffer zu diesem begriff :(');               
                     formInput.reset();
@@ -313,23 +321,30 @@ document.addEventListener("DOMContentLoaded", function (){
                 
                 ueberschrift.textContent = 'Einkaufswagen des Users';
                 ueberschrift.setAttribute('class',"d-flex justify-content-center");
-                cartinhalt.appendChild(ueberschrift);
+                //cartinhalt
+                einkaufswagenHeadline.appendChild(ueberschrift);
 
-                einkauf.textContent = 'Warenwert: ' + data.carts[0].total + '€';
-                einkauf.setAttribute('class',"d-flex justify-content-center");
+                sum.textContent = 'Warenwert: ' + data.carts[0].total + '€';
+                sum.setAttribute('class',"d-flex justify-content-center");
                 
                 cartinhalt.appendChild(einkauf);
 
+                //aufruf create table
+                generateTable(data.carts[0].products)
+
                 // Schleife, die für jedes Element im Warenkorb ein <p>-element erzeugt & Anhängt
                 data.carts[0].products.forEach(product => {
-                    let productInCart = document.createElement('p');
+                    let productInCart = document.createElement('td');
+                    let productPrice = document.createElement('th');
                     productInCart.textContent = product.title;
-                    productInCart.setAttribute('class',"d-flex justify-content-center");
+                    productPrice.textContent = product.price + '€';
+                    //productInCart.setAttribute('class',"list-group-item");
                     cartinhalt.appendChild(productInCart);
+                    cartinhalt.appendChild(productPrice);
 
                 });
                 
-                cartinhalt.appendChild(backLink);
+                sum.appendChild(backLink);
                 
                 kopfzeile.style.display = "none";
                 mainPage.style.display = "none";
@@ -344,7 +359,39 @@ document.addEventListener("DOMContentLoaded", function (){
         .catch(error => {
             console.error('Error:', error);
           });
-}
+    }
+
+    //
+    function generateTable(products) {
+        // creates a <table> element and a <tbody> element
+        //Table = cartinhalt und tblBody = tblBod
+        
+        // creating all cells
+        for (let i = 0; i < products.length/2; i++) {
+          // creates a table row
+          const row = document.createElement("tr");
+      
+          for (let j = 0; j < products.length; j++) {
+            // Create a <td> element and a text node, make the text
+            // node the contents of the <td>, and put the <td> at
+            // the end of the table row
+            const cell = document.createElement("td");
+            const cellText = document.createTextNode(`cell in row ${i}, column ${j}`);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+          }
+      
+          // add the row to the end of the table body
+          tblBody.appendChild(row);
+        }
+      
+        // put the <tbody> in the <table>
+        cartinhalt.appendChild(tblBody);
+        // appends <table> into <body>
+        document.body.appendChild(cartinhalt);
+        // sets the border attribute of tbl to '2'
+        cartinhalt.setAttribute("border", "2");
+      }
 
     
 });

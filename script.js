@@ -156,9 +156,11 @@ document.addEventListener("DOMContentLoaded", function (){
     
 
      // Diese Funktion reagiert auf den Button und ändert den Hinweistext. Außerdem wird bei einem input die fetchUser funktion aufgerufen.
-     function buttonClick() {
+     function buttonClick(event) {
+        event.preventDefault();
         
         let input = searchInput.value;
+        console.log(input);
                 
         
             if(input !== ""){

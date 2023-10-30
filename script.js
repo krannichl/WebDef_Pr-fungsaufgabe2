@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function (){
     let searchInput = document.getElementById("search");
     let detail = document.getElementById("detailbeschreibung");
     let einkaufswagenHeadline = document.getElementById("headline");
-    let sum = document.getElementById("Warenwert");
     let mainPage = document.getElementById("main-Page");
     let userBeschreibung = document.getElementById("user-beschreibung");
     let einkaufsWagen = document.getElementById("Einkaufswagen");
@@ -18,8 +17,8 @@ document.addEventListener("DOMContentLoaded", function (){
     let kopfzeile = document.getElementById("header-zeile");
     let formInput = document.getElementById("eingabeFormular");
     let userList = document.getElementById("benutzerListe");
-    let cartinhalt = document.getElementById("produktTable"); //produkteImEinkaufswagen
-    let tblBody = document.createElement("tbody");
+    let cartinhalt = document.getElementById("produkteImEinkaufswagen");
+    let sum = document.getElementById("Warenwert");
 
                 /*
         Der gegebene Code definiert einen Event-Listener für das load-Ereignis des window-Objekts. Dies bedeutet, dass der Code innerhalb der Funktion erst ausgeführt wird, nachdem die gesamte Seite geladen wurde developer.mozilla.org.
@@ -204,6 +203,8 @@ document.addEventListener("DOMContentLoaded", function (){
             })
             .then(data => {
                 console.log('Received data:', data.users);
+                userList.innerHTML = "";
+
                 if(data.users.length>0){
                                 
                     // hier wird ein link dynamisch erzeugt, ist nach dem Username des Users benannt
@@ -211,6 +212,7 @@ document.addEventListener("DOMContentLoaded", function (){
                     // dieser Funktion werden die abgerufenen daten mit gegegeben um eine dynamische abfrage der weiteren informationen zu ermöglichen
                     
                     data.users.forEach(user =>{
+                        console.log("penis oben");
                         let userLink = document.createElement('a');
                         userLink.href = `#/user/${user.username}/`;
                         userLink.textContent = user.username; 
@@ -220,12 +222,14 @@ document.addEventListener("DOMContentLoaded", function (){
                             event.preventDefault();
                             userPage(user);    
                             window.location.hash = `/user/${user.username}/`;
+                            console.log("penis");
 
                         });
 
                         userList.appendChild(userLink);
-                        userList.appendChild(backLink);   
                     })
+                    userList.appendChild(backLink);   
+
                 }
                 else{
 
@@ -246,6 +250,8 @@ document.addEventListener("DOMContentLoaded", function (){
     // ansonsten funktioniert Sie analog zur fetchUser funktion.
     // Diese Funktion hängt das ergebnis in der main mit der id user-beschreibung an, an das div "detailbeschreibung"
     function userPage(data){
+        console.log("Penis UserPage")
+        detail.innerHTML = "";
 
         let nameUser = document.createElement("h2");
         let geschlecht = document.createElement('p');
@@ -328,18 +334,12 @@ document.addEventListener("DOMContentLoaded", function (){
                 
                 cartinhalt.appendChild(einkauf);
 
-                //aufruf create table
-                generateTable(data.carts[0].products)
-
                 // Schleife, die für jedes Element im Warenkorb ein <p>-element erzeugt & Anhängt
                 data.carts[0].products.forEach(product => {
-                    let productInCart = document.createElement('td');
-                    let productPrice = document.createElement('th');
+                    let productInCart = document.createElement('li');
                     productInCart.textContent = product.title;
-                    productPrice.textContent = product.price + '€';
-                    //productInCart.setAttribute('class',"list-group-item");
+                    productInCart.setAttribute('class',"list-group-item");
                     cartinhalt.appendChild(productInCart);
-                    cartinhalt.appendChild(productPrice);
 
                 });
                 
@@ -360,37 +360,6 @@ document.addEventListener("DOMContentLoaded", function (){
           });
     }
 
-    //
-    function generateTable(products) {
-        // creates a <table> element and a <tbody> element
-        //Table = cartinhalt und tblBody = tblBod
-        
-        // creating all cells
-        for (let i = 0; i < products.length/2; i++) {
-          // creates a table row
-          const row = document.createElement("tr");
-      
-          for (let j = 0; j < products.length; j++) {
-            // Create a <td> element and a text node, make the text
-            // node the contents of the <td>, and put the <td> at
-            // the end of the table row
-            const cell = document.createElement("td");
-            const cellText = document.createTextNode(`cell in row ${i}, column ${j}`);
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-          }
-      
-          // add the row to the end of the table body
-          tblBody.appendChild(row);
-        }
-      
-        // put the <tbody> in the <table>
-        cartinhalt.appendChild(tblBody);
-        // appends <table> into <body>
-        document.body.appendChild(cartinhalt);
-        // sets the border attribute of tbl to '2'
-        cartinhalt.setAttribute("border", "2");
-      }
 
     
 });

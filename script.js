@@ -90,7 +90,6 @@ document.addEventListener("DOMContentLoaded", function (){
                 this._previousHash = location.hash; // ich glaube das ist die bedingung für den zurück link
 
                 window.addEventListener("hashchange", () => this._handleRouting());
-
             }
 
 

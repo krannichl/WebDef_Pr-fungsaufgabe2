@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function (){
     let userList = document.getElementById("benutzerListe");
     let cartinhalt = document.getElementById("produkteImEinkaufswagen");
     let sum = document.getElementById("Warenwert");
+    let zrck = document.getElementById("back");
 
                 /*
         Der gegebene Code definiert einen Event-Listener für das load-Ereignis des window-Objekts. Dies bedeutet, dass der Code innerhalb der Funktion erst ausgeführt wird, nachdem die gesamte Seite geladen wurde developer.mozilla.org.
@@ -210,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function (){
                     // hier wird ein link dynamisch erzeugt, ist nach dem Username des Users benannt
                     // Dieser link erhält einen EventListener, wenn auf den Link geklickt wird, wird die userPage funktion aufgerufen
                     // dieser Funktion werden die abgerufenen daten mit gegegeben um eine dynamische abfrage der weiteren informationen zu ermöglichen
-                    
+
                     data.users.forEach(user =>{
                         let userLink = document.createElement('a');
                         userLink.href = `#/user/${user.username}/`;
@@ -247,52 +248,64 @@ document.addEventListener("DOMContentLoaded", function (){
     // Die userPage funktion bekommt die abgerufenen daten übergeben, führt aber erneut einen api abruf aus
     // ansonsten funktioniert Sie analog zur fetchUser funktion.
     // Diese Funktion hängt das ergebnis in der main mit der id user-beschreibung an, an das div "detailbeschreibung"
-    function userPage(data){
+    function userPage(user){
+
         detail.innerHTML = "";
-
-        let nameUser = document.createElement("h2");
-        let geschlecht = document.createElement('p');
-        let alter = document.createElement('p');
-        let idNR = document.createElement('p');
-        let cartLink = document.createElement('a');
-
-
-        nameUser.textContent = data.firstName;
-        nameUser.setAttribute('class',"d-flex justify-content-center mb-6"); 
-               
-        geschlecht.textContent = 'Geschlecht: ' + data.gender; 
-        geschlecht.setAttribute('class',"d-flex justify-content-center");
-
-        alter.textContent = 'Alter: ' + data.age + ' Jahre';
-        alter.setAttribute('class',"d-flex justify-content-center");
-
-        idNR.textContent = 'ID: ' + data.id;
-        idNR.setAttribute('class',"d-flex justify-content-center");
-
-
-        cartLink.href = `#/user/${data.username}/Warenkorb`;
-        cartLink.textContent = 'Warenkorb'; 
-        cartLink.setAttribute('class',"btn btn-outline-success w-100 mt-3 mb-3");
-                
-        cartLink.addEventListener("click", function(event){
-            event.preventDefault();
-            console.log('User ID:', data.id);
-            window.location.hash = `/cart/${data.username}/`;
-            fetchCart(data.id);                    
+        fetch(`https://dummyjson.com/users/search?q=${user.username}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log("user geladen");
+            return response.json();
         })
+        .then(data => {
+            console.log('Received data:', data.users);
 
-        detail.appendChild(nameUser);
-        detail.appendChild(idNR);
-        detail.appendChild(geschlecht);
-        detail.appendChild(alter);
-        detail.appendChild(cartLink);
-        detail.appendChild(backLink);
+            let nameUser = document.createElement("h2");
+            let geschlecht = document.createElement('p');
+            let alter = document.createElement('p');
+            let idNR = document.createElement('p');
+            let cartLink = document.createElement('a');
 
 
-        kopfzeile.style.display = "none";
-        mainPage.style.display = "none";
-        userBeschreibung.style.display = "block";
-        einkaufsWagen.style.display = "none";
+            nameUser.textContent = data.users[0].firstName;
+            nameUser.setAttribute('class',"d-flex justify-content-center mb-6"); 
+                
+            geschlecht.textContent = 'Geschlecht: ' + data.users[0].gender; 
+            geschlecht.setAttribute('class',"d-flex justify-content-center");
+
+            alter.textContent = 'Alter: ' + data.users[0].age + ' Jahre';
+            alter.setAttribute('class',"d-flex justify-content-center");
+
+            idNR.textContent = 'ID: ' + data.users[0].id;
+            idNR.setAttribute('class',"d-flex justify-content-center");
+
+
+            cartLink.href = `#/user/${data.users[0].username}/Warenkorb`;
+            cartLink.textContent = 'Warenkorb'; 
+            cartLink.setAttribute('class',"btn btn-outline-success w-100 mt-3 mb-3");
+                    
+            cartLink.addEventListener("click", function(event){
+                event.preventDefault();
+                console.log('User ID:', data.users[0].id);
+                window.location.hash = `/cart/${data.users[0].username}/`;
+                fetchCart(data.users[0].id);                    
+            })
+
+            detail.appendChild(nameUser);
+            detail.appendChild(idNR);
+            detail.appendChild(geschlecht);
+            detail.appendChild(alter);
+            detail.appendChild(cartLink);
+            detail.appendChild(backLink);
+            
+
+            kopfzeile.style.display = "none";
+            mainPage.style.display = "none";
+            userBeschreibung.style.display = "block";
+            einkaufsWagen.style.display = "none";
+        })
         
     }
 
@@ -302,6 +315,8 @@ document.addEventListener("DOMContentLoaded", function (){
     // Diese Funktion hängt das ergebnis in der main mit der id einkaufswagen an, an das div "produkteImEinkaufswagen"
     
     function fetchCart(nutzerID){
+        
+        einkaufswagenHeadline.innerHTML="";
     
         fetch(`https://dummyjson.com/carts/user/${nutzerID}`)
         .then(response => {
@@ -317,7 +332,7 @@ document.addEventListener("DOMContentLoaded", function (){
 
             console.log('Received data:', data.carts);
 
-            if(data.carts.length>0){                
+            if(data.carts.length > 0){                
                 const ueberschrift = document.createElement('h2');
                 const einkauf = document.createElement('p');
                 
@@ -327,7 +342,7 @@ document.addEventListener("DOMContentLoaded", function (){
                 einkaufswagenHeadline.appendChild(ueberschrift);
 
                 sum.textContent = 'Warenwert: ' + data.carts[0].total + '€';
-                sum.setAttribute('class',"d-flex justify-content-center");
+                sum.setAttribute('class',"d-flex justify-content-center my-3 mx-3");
                 
                 cartinhalt.appendChild(einkauf);
 
@@ -340,7 +355,7 @@ document.addEventListener("DOMContentLoaded", function (){
 
                 });
                 
-                sum.appendChild(backLink);
+                zrck.appendChild(backLink);
                 
                 kopfzeile.style.display = "none";
                 mainPage.style.display = "none";

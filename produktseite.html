@@ -1,65 +1,77 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
     <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+        <meta charset="utf-8" />
         <title>Produktinfo.toll</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- BootStrap einbindung-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+   
+        <link rel="stylesheet" href="style.css" />
 
-
-        <!-- Einbindung Stylesheet -->
-        <link rel="stylesheet" id="style-base" href="style.css" />
-
-        <!-- Einbindung JavaScript-->
+        <!-- Klasse Router einbinden -->
         <script src="script.js"></script>
+        <script src="router.js"></script>
 
-  
+ 
     </head>
     <body>
-
-        <header id="header-zeile" class="hidden">
-            <!-- überschrift -->
+        <header>
             <h1 class="d-flex justify-content-center">
                 <span class="app-title">User Suche & mehr</span>
             </h1>
         </header>
+        <!-- ===================== -->
+        <!-- Inhalt der Startseite -->
+        <!-- ===================== -->
+        <main id="page-start" class="hidden">
+            <!--<h1>Startseite</h1>-->
+            
+            <div class="d-flex justify-content-center">
+                <div class="col-md-8 ">
+                  <!-- Search bar -->
+                    <form class="form-inline w-100 my-2 my-lg-0" id="eingabeFormular">
+                        <div class="input-group">
+                            <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="searchbar">
+                                <div class="input-group-append">
 
-        <main id="main-Page" class="hidden">
-            <!--Bootstrap einbindung zur anordnung & erzeugen einer suchleiste-->
-            <div class="container">
-
-                <div class="d-flex justify-content-center">
-                    <div class="col-md-8 ">
-                      <!-- Search bar -->
-                        <form class="form-inline w-100 my-2 my-lg-0" id="eingabeFormular">
-                            <div class="input-group">
-                                <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="search">
-                                    <div class="input-group-append">
-                                        <!-- Button-->
-                                        <button class="btn btn-outline-success" type="submit" id="submit">Search</button>
-                                    </div>
-                            </div>
-                        </form>
-                    </div>
+                                    <!-- Button kann der type weg?-->
+                                    <a class="btn btn-outline-success" href="#/Suchergebnisse/" id="search" >Search</a>
+                                </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            
-            <!--Hiweistext-->
-            <div>
+
+
+            <!--fliegt alles noch raus
+            <ul>
+                <li>
+                    <a class="btn btn-outline-success w-100 mb-3" href="#/other/">Andere Seite aufrufen</a>
+                </li>
+                <li>
+                    <a href="#/xyzabc/">Nicht vorhandene Seite aufrufen</a>
+                </li>
+                
+            </ul>-->
+
+
+              <!--Hiweistext-->
+              <div>
                 <p class="d-flex justify-content-center mt-6 mb-3 mx-3" id="hint">Bitte nach dem Nachnamen des Users suchen, bspw. Medhurst</p>
             </div>
             
             <!--in  dieses div werden die ergebnisse der suche geschrieben-->
             <div class="d-flex flex-row justify-content-center ">
                 
-                <div id= "benutzerListe" class="list-group list-group-flush"></div>
+                <div id="user_list" class="list-group list-group-flush"></div>
 
+            <!--Keine Ahnung ob ich das noch brauche-->
                     
                 <div id="ergebnis" class=""> </div>
+                
 
             </div>
 
@@ -67,9 +79,9 @@
 
 
         <main id="user-beschreibung" class="hidden position-absolute top-50 start-50 translate-middle">
-            <div id="detailbeschreibung" class="row justify-content-md-center">
-
-            </div>
+            
+            <div id="detailbeschreibung" class="row justify-content-md-center"></div>
+            <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
 
         </main>
 
@@ -83,16 +95,38 @@
 
             <div id="Warenwert"></div>
             <!--<p>test einkaufswagen</p>-->
-            <div id="back"></div>
+            <p>
+                <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
+            </p>
 
             
         </main>
 
-        <footer  class="d-flex justify-content-center fixed-bottom">
-            <div class="d-flex justify-content-center mt-3 mx-3">
-                <p>nur die erinnerung, dass ich mich noch um einen Footer kümmern muss</p>
-            </div>
-        </footer>
-
+        <!-- ======================== -->
+        <!-- Inhalt der anderen Seite -->
+        <!-- ======================== -->
+        <!--
+        <main id="page-other" class="hidden">
+            <h1>Andere Seite</h1>
+            <p>
+                <a href="#/">Zurück zur Startseite</a>
+            </p>
+            <p>
+                <a href="#/08154711/">Andere nicht vorhandene Seite aufrufen</a>
+            </p>
+        </main>
+    -->
+        <!-- ========================== -->
+        <!-- Inhalt der 404-Fehlerseite -->
+        <!-- ========================== -->
+        <main id="page-not-found" class="hidden">
+            <h1>Fehler</h1>
+            <p>
+                Die gewünschte Seite wurde nicht gefunden.
+            </p>
+            <p>
+                <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
+            </p>
+        </main>
     </body>
 </html>

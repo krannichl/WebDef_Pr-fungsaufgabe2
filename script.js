@@ -10,15 +10,10 @@ document.addEventListener("DOMContentLoaded", function (){
 
     let einkaufswagenHeadline = document.getElementById("headline");
     
-    //let userBeschreibung = document.getElementById("user-beschreibung");
-    //let einkaufsWagen = document.getElementById("Einkaufswagen");
-    //let backLink = document.createElement('a');
-    //let kopfzeile = document.getElementById("header-zeile");
     let cartinhalt = document.getElementById("produkteImEinkaufswagen");
-    let sum = document.getElementById("Warenwert");
-    //let zrck = document.getElementById("back");
 
-    //let mainPage = document.getElementById("main-Page");
+    let sum = document.getElementById("Warenwert");
+
 
 
     /**
@@ -48,21 +43,22 @@ document.addEventListener("DOMContentLoaded", function (){
             show: () => swapContent("page-start", "Suchergebnisse"),
         },{
             url: "^/user/([^/]+)/$", //test versuch
-            show: () => swapContent("user-beschreibung", "User Beschreibung"),
-            /*show: (matches) => {
+            //show: () => swapContent("user-beschreibung", "User Beschreibung"),
+            
+            show: (matches) => {
                 let username = matches[1];
                 console.log("matches: ", matches[1])
                 userPage(username);
                 swapContent("user-beschreibung", "User Beschreibung");
-            }*/
+            }
         },{
             url: "^/cart/([^/]+)/$", //Test versuch
-            show: () => swapContent("Einkaufswagen", "Einkaufswagen"),
-            /*show: (matches) => {
+            //show: () => swapContent("Einkaufswagen", "Einkaufswagen"),
+            show: (matches) => {
                 let cartId = matches[1];
                 fetchCart(cartId);
                 swapContent("Einkaufswagen", "Einkaufswagen");
-            }*/
+            }
 
         },{ //noch ausbessern
             url: ".*",
@@ -71,9 +67,7 @@ document.addEventListener("DOMContentLoaded", function (){
     ];
 
     let router = new Router(routes);
-    router.start();
-    //backLink = router.createBackLink();
-    
+    router.start();    
 
 
     searchButton.addEventListener("click", function(event){
@@ -93,7 +87,6 @@ document.addEventListener("DOMContentLoaded", function (){
             else{
                 alert("Bitte geben Sie einen Suchbegriff ein!");
                 hint.textContent = 'Bitte geben Sie einen Suchbegriff ein! :(';
-                //ergebnis.textContent = '';     
             }
     });
 
@@ -123,13 +116,6 @@ document.addEventListener("DOMContentLoaded", function (){
                         userLink.href = `#/user/${user.username}/`;
                         userLink.textContent = user.username; 
                         userLink.setAttribute('class',"list-group-item list-group-item-action"); //btn btn-outline-success w-100 mb-3
-                        
-                        userLink.addEventListener("click", function(event){
-                            event.preventDefault();
-                            userPage(user);
-                            window.location.hash = `#/user/${user.username}/`;
-
-                        });
 
                         userList.appendChild(userLink);
                     })
@@ -151,9 +137,11 @@ document.addEventListener("DOMContentLoaded", function (){
     }
 
     function userPage(user){
-
+        
+        console.log("Hier überprüfen", user);
         detail.innerHTML = "";
-        fetch(`https://dummyjson.com/users/search?q=${user.username}`)
+
+        fetch(`https://dummyjson.com/users/search?q=${user}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -163,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function (){
         })
         .then(data => {
             console.log('Received data:', data.users);
-            window.location.hash = `#/user/${user.username}/`; // ist das hier richtig positioniert?
+            // window.location.hash = `#/user/${user.username}/`; // ist das hier richtig positioniert?
 
             let nameUser = document.createElement("h2");
             let geschlecht = document.createElement('p');
@@ -185,29 +173,18 @@ document.addEventListener("DOMContentLoaded", function (){
             idNR.setAttribute('class',"d-flex justify-content-center");
 
 
-            cartLink.href = `#/user/${data.users[0].username}/Warenkorb`;
+            cartLink.href = `#/cart/${data.users[0].id}/`;
             cartLink.textContent = 'Warenkorb'; 
             cartLink.setAttribute('class',"btn btn-outline-success w-100 mt-3 mb-3");
                     
-            cartLink.addEventListener("click", function(event){
-                event.preventDefault();
-                console.log('User ID:', data.users[0].id);
-                window.location.hash = `/cart/${data.users[0].username}/`;
-                fetchCart(data.users[0].id);                    
-            })
 
             detail.appendChild(nameUser);
             detail.appendChild(idNR);
             detail.appendChild(geschlecht);
             detail.appendChild(alter);
             detail.appendChild(cartLink);
-            //detail.appendChild(backLink);
-            
 
-            /*kopfzeile.style.display = "none";
-            mainPage.style.display = "none";
-            userBeschreibung.style.display = "block";
-            einkaufsWagen.style.display = "none";*/
+
         })
         
     }
@@ -217,8 +194,11 @@ document.addEventListener("DOMContentLoaded", function (){
     // Diese Funktion hängt das ergebnis in der main mit der id einkaufswagen an, an das div "produkteImEinkaufswagen"
     
     function fetchCart(nutzerID){
+
+        console.log("test AUsgabe", nutzerID);
         
         einkaufswagenHeadline.innerHTML="";
+        cartinhalt.innerHTML="";
     
         fetch(`https://dummyjson.com/carts/user/${nutzerID}`)
         .then(response => {
@@ -257,10 +237,6 @@ document.addEventListener("DOMContentLoaded", function (){
 
                 });
                                 
-                /*kopfzeile.style.display = "none";
-                mainPage.style.display = "none";
-                userBeschreibung.style.display = "none";
-                einkaufsWagen.style.display = "block";*/
             }
             else{
                 alert("Dieser User hat keinen Warenkorb!");

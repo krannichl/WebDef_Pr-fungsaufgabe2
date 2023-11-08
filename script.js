@@ -27,7 +27,9 @@ document.addEventListener("DOMContentLoaded", function (){
         })
 
         let element = document.querySelector(`#${id}`);
-        if (element) element.classList.remove("d-none");
+        if (element) {
+            element.classList.remove("d-none");
+        }
 
         document.title = `${title} | Aufgabe: SPA-Router`;
     }
@@ -202,6 +204,7 @@ document.addEventListener("DOMContentLoaded", function (){
         
         einkaufswagenHeadline.innerHTML="";
         cartinhalt.innerHTML="";
+        sum.innerHTML="";
     
         fetch(`https://dummyjson.com/carts/user/${nutzerID}`)
         .then(response => {

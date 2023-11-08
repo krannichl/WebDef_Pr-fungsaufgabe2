@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function (){
 
 
 
+
     /**
      * Hilfsfunktion zum Umschalten des sichtbaren Inhalts
      */
@@ -58,6 +59,10 @@ document.addEventListener("DOMContentLoaded", function (){
                 fetchCart(cartId);
                 swapContent("Einkaufswagen", "Einkaufswagen");
             }
+
+        },{
+            url: "/surprise/$",
+            show: () => swapContent("surprise","surprise")
 
         },{ //noch ausbessern
             url: ".*",
@@ -245,4 +250,5 @@ document.addEventListener("DOMContentLoaded", function (){
             console.error('Error:', error);
           });
     }
+
 });

@@ -22,11 +22,11 @@ document.addEventListener("DOMContentLoaded", function (){
     let swapContent = (id, title) => {
         
         document.querySelectorAll("main").forEach(mainElement => {
-        mainElement.classList.add("hidden");
+            mainElement.classList.add("d-none");
         })
 
         let element = document.querySelector(`#${id}`);
-        if (element) element.classList.remove("hidden");
+        if (element) element.classList.remove("d-none");
 
         document.title = `${title} | Aufgabe: SPA-Router`;
     }
@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function (){
         },{
             url: "^/user/([^/]+)/$", //test versuch
             //show: () => swapContent("user-beschreibung", "User Beschreibung"),
-            
             show: (matches) => {
                 let username = matches[1];
                 console.log("matches: ", matches[1])
@@ -79,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function (){
         
             if(input !== ""){
                 
-                hint.textContent = 'Folgende Treffer gibt es zu dem Begriff ';
+                hint.textContent = 'Folgende Treffer gibt es zu dem Begriff: ';
                 
                 window.location.hash = `/Suchergebnisse/`;
                 fetchUser(input);
@@ -151,7 +150,6 @@ document.addEventListener("DOMContentLoaded", function (){
         })
         .then(data => {
             console.log('Received data:', data.users);
-            // window.location.hash = `#/user/${user.username}/`; // ist das hier richtig positioniert?
 
             let nameUser = document.createElement("h2");
             let geschlecht = document.createElement('p');

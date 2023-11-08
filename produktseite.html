@@ -26,7 +26,7 @@
         <!-- ===================== -->
         <!-- Inhalt der Startseite -->
         <!-- ===================== -->
-        <main id="page-start" class="hidden">
+        <main id="page-start" class="d-none"> <!--hidden-->
             <!--<h1>Startseite</h1>-->
             
             <div class="d-flex justify-content-center">
@@ -54,47 +54,41 @@
             
             <!--in  dieses div werden die ergebnisse der suche geschrieben-->
             <div class="d-flex flex-row justify-content-center ">
-                
-                <div id="user_list" class="list-group list-group-flush"></div>
-
-            <!--Keine Ahnung ob ich das noch brauche
-                    
-                <div id="ergebnis" class=""> </div>-->
-                
+                <div class="">
+                    <div id="user_list" class="list-group"></div>
+                </div>
 
             </div>
 
         </main>
 
 
-        <main id="user-beschreibung" class="hidden position-absolute top-50 start-50 translate-middle">
-            
-            <div id="detailbeschreibung" class="row justify-content-md-center"></div>
-            <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
-
+        <main id="user-beschreibung" class="d-none vh-100 d-flex justify-content-center align-items-center">
+            <div id="detailbeschreibung" class="row">
+                <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
+            </div>
         </main>
 
-        <main id="Einkaufswagen" class="hidden position-absolute top-50 start-50 translate-middle">
+        <main id="Einkaufswagen" class="d-none vh-100 d-flex justify-content-center align-items-center"> <!--d-none position-absolute top-50 start-50 translate-middle-->
+            <div class="row col-6">
+                <div id="headline"></div>
 
-            <div id="headline"></div>
+                <ul id="produkteImEinkaufswagen" class="list-group">
+                    
+                </ul>
 
-            <ul id="produkteImEinkaufswagen" class="list-group">
-                
-            </ul>
-
-            <div id="Warenwert"></div>
-            <!--<p>test einkaufswagen</p>-->
-            <p>
-                <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
-            </p>
-
-            
+                <div id="Warenwert"></div>
+                <!--<p>test einkaufswagen</p>-->
+                <p>
+                    <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
+                </p>
+            </div>
         </main>
 
         <!-- ========================== -->
         <!-- Inhalt der 404-Fehlerseite -->
         <!-- ========================== -->
-        <main id="page-not-found" class="hidden">
+        <main id="page-not-found" class="d-none">
             <h1>Fehler</h1>
             <p>
                 Die gewünschte Seite wurde nicht gefunden.
@@ -103,5 +97,16 @@
                 <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
             </p>
         </main>
+
+
+     
+
+
+
+        <footer class="d-flex justify-content-center fixed-bottom text-secondary">
+            <p>
+                Lucas Krannich
+            </p>
+        </footer>
     </body>
 </html>

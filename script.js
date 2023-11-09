@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function (){
             element.classList.remove("d-none");
         }
 
-        document.title = `${title} | User-Suche & mehr`; // Noch richtigen Titel finden
+        document.title = `${title} | User-Suche & mehr`;
     }
 
     /**
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function (){
             fetch(`https://dummyjson.com/users/search?q=${input}`)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error(`Network response was not ok, status: ${response.status}`);
                 }
                 console.log("user geladen");
                 return response.json();
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function (){
         fetch(`https://dummyjson.com/users/search?q=${user}`)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok, status: ${response.status}`);
             }
             return response.json();
         })
@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function (){
         fetch(`https://dummyjson.com/carts/user/${nutzerID}`)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok, status: ${response.status}`);
             }
             console.log("Carts geladen");
             console.log(`https://dummyjson.com/carts/user/${nutzerID}`);

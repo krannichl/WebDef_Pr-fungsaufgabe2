@@ -56,20 +56,16 @@ document.addEventListener("DOMContentLoaded", function (){
                 fetchCart(cartId);
                 swapContent("Einkaufswagen", "Einkaufswagen");
             }
-
         },{
             url: "/surprise/$",
             show: () => swapContent("surprise","surprise")
-
         },{
             url: ".*",
             show: () => swapContent("page-not-found", "Seite nicht gefunden"),
         }
     ];
-
     let router = new Router(routes);
     router.start();    
-
 
     /**
      * Das ist der Eventlistener für den Suchbutton.
@@ -147,7 +143,6 @@ document.addEventListener("DOMContentLoaded", function (){
      */
     function userPage(user){
         detail.innerHTML = "";
-
         fetch(`https://dummyjson.com/users/search?q=${user}`)
         .then(response => {
             if (!response.ok) {
@@ -193,12 +188,10 @@ document.addEventListener("DOMContentLoaded", function (){
      * Besitzt der User keinen Warenkorb wird eine Fehlermeldung ausgegeben.
     */
     function fetchCart(nutzerID){
-
         console.log(nutzerID);
         einkaufswagenHeadline.innerHTML="";
         cartinhalt.innerHTML="";
         sum.innerHTML="";
-    
         fetch(`https://dummyjson.com/carts/user/${nutzerID}`)
         .then(response => {
             if (!response.ok) {
@@ -206,38 +199,38 @@ document.addEventListener("DOMContentLoaded", function (){
             }
             console.log("Carts geladen");
             console.log(`https://dummyjson.com/carts/user/${nutzerID}`);
-            return response.json();
-            
+            return response.json();   
         })
         .then(data => {
             console.log('Received data:', data.carts);
             if(data.carts.length > 0){                
                 const ueberschrift = document.createElement('h2');
                 const einkauf = document.createElement('p');
+
                 ueberschrift.textContent = 'Einkaufswagen des Users';
                 ueberschrift.setAttribute('class',"d-flex justify-content-center");
+                
                 einkaufswagenHeadline.appendChild(ueberschrift);
+                
                 sum.textContent = 'Warenwert: ' + data.carts[0].total + '€';
                 sum.setAttribute('class',"d-flex justify-content-center my-3 mx-3");
+                
                 cartinhalt.appendChild(einkauf);
-
+                
                 // Schleife, die für jedes Element im Warenkorb ein <li>-element erzeugt & Anhängt
                 data.carts[0].products.forEach(product => {
                     let productInCart = document.createElement('li');
                     productInCart.textContent = product.title;
                     productInCart.setAttribute('class',"list-group-item");
                     cartinhalt.appendChild(productInCart);
-                });
-                                
+                });                                
             }
             else{
                 alert("Dieser User hat keinen Warenkorb!");
             }
-
         })
         .catch(error => {
             console.error('Error:', error);
           });
     }
-
 });

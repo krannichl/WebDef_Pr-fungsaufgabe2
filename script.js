@@ -14,9 +14,6 @@ document.addEventListener("DOMContentLoaded", function (){
     let cartinhalt = document.getElementById("produkteImEinkaufswagen");
     let sum = document.getElementById("Warenwert");
 
-
-
-    
     /**
      * Single Page Router initialisieren und  Hilfsfunktion zum Umschalten des sichtbaren Inhalts
      */
@@ -149,8 +146,6 @@ document.addEventListener("DOMContentLoaded", function (){
      * Wenn es keine Treffer zu diesem Usernamen gibt, wird eine Fehlermeldung ausgegeben.
      */
     function userPage(user){
-        
-        console.log("Hier überprüfen", user);
         detail.innerHTML = "";
 
         fetch(`https://dummyjson.com/users/search?q=${user}`)
@@ -158,7 +153,6 @@ document.addEventListener("DOMContentLoaded", function (){
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            console.log("user erneut geladen");
             return response.json();
         })
         .then(data => {

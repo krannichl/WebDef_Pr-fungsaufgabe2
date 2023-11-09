@@ -1,44 +1,46 @@
 <!DOCTYPE html>
-<html> <!--darkmode: data-bs-theme="dark"-->
+<html> 
     <head>
         <meta charset="utf-8"/>
         <title>Produktinfo.toll</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- BootStrap einbindung-->
+        <!-- Einbindung des Bootstrap Frameworks bzw. verlinken des Bootstrap Stylesheets und der Bootstrap JS Datei-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-   
-        <link rel="stylesheet" href="style.css" />
 
-        <!-- Klasse Router einbinden -->
+        <!-- Einbinden der JS dateien Router und script -->
+        <!-- Die Datei router.js hält die Klasse router, die die Hauptarbeit des SPA-Routers übernimmt -->
+        <!-- Die Dateiscript.js enthält die Routen des routers sowie die Hauptfunktionalität zur Kommunikation mit der REST API -->
         <script src="script.js"></script>
         <script src="router.js"></script>
 
  
     </head>
     <body>
-        <header>
-           
-        </header>
-        
+                
         <!-- ===================== -->
         <!-- Inhalt der Startseite -->
         <!-- ===================== -->
-        <main id="page-start" class="d-none"> <!--hidden-->
-            <!--<h1>Startseite</h1>-->
+        <!-- Die Main mit der ID page-start enthält alle elemente der Startseite.-->
+        <!-- Es werden die Suchseite, sowie der Hinweistext eingeblendet, die ergebnisse der suche werden an das DIV mit der ID user_list angehängt. Dies passiert dynamisch mit hilfe von JAVA Script-->
+        
+        <main id="page-start" class="d-none">
+
             <h1 class="d-flex justify-content-center">
-                <span class="app-title">User Suche & mehr</span>
+                <span class="app-title">User-Suche & mehr</span>
             </h1>
             
+            <!-- DIV-Struktur, für die Suchleiste & den Suchbutton-->
+
             <div class="d-flex justify-content-center">
                 <div class="col-md-8 ">
-                  <!-- Search bar -->
+                  <!-- Suchleiste -->
                     <form class="form-inline w-100 my-2 my-lg-0" id="eingabeFormular">
                         <div class="input-group">
                             <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="searchbar">
                                 <div class="input-group-append">
-                                    <!-- Button kann der type weg?-->
+                                    <!-- Suchbutton-->
                                     <a class="btn btn-success" href="#/Suchergebnisse/" id="search" >Search</a>
                                 </div>
                         </div>
@@ -60,6 +62,13 @@
 
         </main>
 
+        <!-- ============================ -->
+        <!-- Inhalt der User Detail Seite -->
+        <!-- ============================ -->
+        <!-- In der Main mit der ID user-beschreibung werden einige detail Infos über den User Dargestellt.-->
+        <!-- Die Details werden in der Script.js abgerufen und dynamisch an das DIV mit der id detailbeschreibung angehängt-->
+        <!-- Das <a>-Element stellt unseren zurückbutton dar. -->
+
         <main id="user-beschreibung" class="d-none vh-100 d-flex justify-content-center align-items-center">
             <div class="row">
             <div id="detailbeschreibung">
@@ -68,6 +77,13 @@
             </div>
             
         </main>
+
+        <!-- ============================ -->
+        <!-- Inhalt der Cart Detail Seite -->
+        <!-- ============================ -->
+        <!-- In der Main mit der ID Einkaufswagen werden die Produkte dargestellt, die der User in seinem Einkaufswagen hat, sowie der Gesamtwert der Produkte.-->
+        <!-- Die Produkte sowie der Warenwert werden in der Script.js abgerufen und dynamisch an das DIV mit der id produkteImEinkaufswagen angehängt-->
+        <!-- Das <a>-Element stellt unseren zurückbutton dar. -->
 
         <main id="Einkaufswagen" class="d-none vh-100 d-flex justify-content-center align-items-center">
             
@@ -87,6 +103,7 @@
         <!-- ========================== -->
         <!-- Inhalt der 404-Fehlerseite -->
         <!-- ========================== -->
+        
         <main id="page-not-found" class="d-none">
             <h1>Fehler</h1>
             <p>
@@ -96,6 +113,12 @@
                 <a class="btn btn-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
             </p>
         </main>
+
+        <!-- ========================== -->
+        <!-- Inhalt der 404-Fehlerseite -->
+        <!-- ========================== -->
+        <!-- Da ich durch das Projekt auf die Spotify API gestoßen bin und damit rumgespielt habe, dachte ich, ich kann es ihnen nicht vorenthalten und-->
+        <!-- muss Ihnen einen kleinen einblick in die Musik geben, die ich beim schreiben der Website gehört habe.-->
 
         <main id="surprise" class="d-block">
             <div class="vh-100 d-flex justify-content-center align-items-center">
@@ -113,6 +136,10 @@
                 
             </div>
         </main>
+
+        <!-- ========================== -->
+        <!-- Inhalt der des Footers     -->
+        <!-- ========================== -->
 
         <footer class="d-flex justify-content-center fixed-bottom text-secondary border-top">
             <div class="container my-3">

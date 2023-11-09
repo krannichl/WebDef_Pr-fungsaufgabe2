@@ -27,14 +27,16 @@ document.addEventListener("DOMContentLoaded", function (){
         })
 
         let element = document.querySelector(`#${id}`);
-        if (element) element.classList.remove("d-none");
+        if (element) {
+            element.classList.remove("d-none");
+        }
 
-        document.title = `${title} | Aufgabe: SPA-Router`;
+        document.title = `${title} | Aufgabe: SPA-Router`; // Noch richtigen Titel finden
     }
 
-                /**
-                 * Konfiguration des URL-Routers
-                 */
+    /**
+     * Konfiguration des URL-Routers
+     */
     let routes = [
         {
             url: "^/$",
@@ -178,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function (){
 
             cartLink.href = `#/cart/${data.users[0].id}/`;
             cartLink.textContent = 'Warenkorb'; 
-            cartLink.setAttribute('class',"btn btn-outline-success w-100 mt-3 mb-3");
+            cartLink.setAttribute('class',"btn btn-success w-100 mt-3 mb-3");
                     
 
             detail.appendChild(nameUser);
@@ -202,6 +204,7 @@ document.addEventListener("DOMContentLoaded", function (){
         
         einkaufswagenHeadline.innerHTML="";
         cartinhalt.innerHTML="";
+        sum.innerHTML="";
     
         fetch(`https://dummyjson.com/carts/user/${nutzerID}`)
         .then(response => {

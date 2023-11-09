@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html> <!--darkmode: data-bs-theme="dark"-->
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8"/>
         <title>Produktinfo.toll</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,15 +19,17 @@
     </head>
     <body>
         <header>
-            <h1 class="d-flex justify-content-center">
-                <span class="app-title">User Suche & mehr</span>
-            </h1>
+           
         </header>
+        
         <!-- ===================== -->
         <!-- Inhalt der Startseite -->
         <!-- ===================== -->
         <main id="page-start" class="d-none"> <!--hidden-->
             <!--<h1>Startseite</h1>-->
+            <h1 class="d-flex justify-content-center">
+                <span class="app-title">User Suche & mehr</span>
+            </h1>
             
             <div class="d-flex justify-content-center">
                 <div class="col-md-8 ">
@@ -36,51 +38,48 @@
                         <div class="input-group">
                             <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="searchbar">
                                 <div class="input-group-append">
-
                                     <!-- Button kann der type weg?-->
-                                    <a class="btn btn-outline-success" href="#/Suchergebnisse/" id="search" >Search</a>
+                                    <a class="btn btn-success" href="#/Suchergebnisse/" id="search" >Search</a>
                                 </div>
                         </div>
                     </form>
                 </div>
             </div>
-
-
-
-              <!--Hiweistext-->
-              <div>
+            
+            <!--Hiweistext-->
+            <div>
                 <p class="d-flex justify-content-center mt-6 mb-3 mx-3" id="hint">Bitte nach dem Usernamen des Users suchen, bspw. atuny0</p>
             </div>
             
             <!--in  dieses div werden die ergebnisse der suche geschrieben-->
             <div class="d-flex flex-row justify-content-center ">
-                <div class="">
+                <div class="row">
                     <div id="user_list" class="list-group"></div>
                 </div>
-
             </div>
 
         </main>
-
 
         <main id="user-beschreibung" class="d-none vh-100 d-flex justify-content-center align-items-center">
-            <div id="detailbeschreibung" class="row">
-                <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
+            <div class="row">
+            <div id="detailbeschreibung">
             </div>
+            <a class="btn btn-success mt-3 mb-3" href="#/">Zurück zur Startseite</a>
+            </div>
+            
         </main>
 
-        <main id="Einkaufswagen" class="d-none vh-100 d-flex justify-content-center align-items-center"> <!--d-none position-absolute top-50 start-50 translate-middle-->
+        <main id="Einkaufswagen" class="d-none vh-100 d-flex justify-content-center align-items-center">
+            
             <div class="row col-6">
                 <div id="headline"></div>
 
-                <ul id="produkteImEinkaufswagen" class="list-group">
-                    
-                </ul>
+                <ul id="produkteImEinkaufswagen" class="list-group"></ul>
 
                 <div id="Warenwert"></div>
                 <!--<p>test einkaufswagen</p>-->
                 <p>
-                    <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
+                    <a class="btn btn-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
                 </p>
             </div>
         </main>
@@ -94,13 +93,9 @@
                 Die gewünschte Seite wurde nicht gefunden.
             </p>
             <p>
-                <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
+                <a class="btn btn-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
             </p>
         </main>
-
-
-
-
 
         <main id="surprise" class="d-block">
             <div class="vh-100 d-flex justify-content-center align-items-center">
@@ -112,18 +107,14 @@
                         <iframe title="Spotify Embed: Recommendation Playlist " src="https://open.spotify.com/embed/playlist/0w2ldoYSmAvLTwsP874Vr4?si=31a1cc4e938348c0?utm_source=generator&theme=0"  height="50%" style="min-height: 360px" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                     </div>
                     <p>
-                        <a class="btn btn-outline-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
+                        <a class="btn btn-success w-100 mt-3 mb-3" href="#/">Zurück zur Startseite</a>
                     </p>
                 </div>
                 
             </div>
         </main>
 
-
-
-
-
-        <footer class="d-flex justify-content-center fixed-bottom text-secondary">
+        <footer class="d-flex justify-content-center fixed-bottom text-secondary border-top">
             <div class="container my-3">
             <div class="row justify-content-between">
                     <div class="col-auto mr-auto">
@@ -140,5 +131,7 @@
             </div>
             </div>
         </footer>
+
     </body>
+
 </html>

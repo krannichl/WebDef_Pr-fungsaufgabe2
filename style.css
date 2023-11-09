@@ -3,6 +3,14 @@ html, body {
     padding: 0;
 }
 
+body {
+    background: url(FarbverlaufBlau.jpg) no-repeat center center fixed; /*'https://source.unsplash.com/twukN12EN7c/1920x1080'*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+  }
+
 .hidden {
     display: none;
 }
